@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #E98A50;
+  color: #FFFFFF;
+  font-size: 40px;
+  height: 125px;
+  width: 100%;
+  padding: 20px 100px;
+
+  .logo {
+    scale: 0.5;
+
+    &:hover {
+      scale: 0.51;
+      cursor: pointer;
+    }
+
+    &:active {
+      scale: 0.52;
+    }
+  }
+}

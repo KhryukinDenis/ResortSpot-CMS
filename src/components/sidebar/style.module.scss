@@ -1,0 +1,45 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 100vh;
+  background-color: #E8E9EC;
+  padding: 30px 20px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+
+  .user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    .userBlock {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+
+      .avatar {
+        border-radius: 50%;
+        border: 1px solid black;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+    }
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+}
