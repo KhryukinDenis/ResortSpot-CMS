@@ -12,6 +12,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    height: 40px;
+    width: 100%;
     font-size: 20px;
     margin-bottom: 20px;
 
@@ -39,7 +41,27 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    height: 40px;
+    width: 100%;
     font-size: 20px;
     margin-bottom: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .category {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    font-size: 20px;
+
+    &:hover {
+      cursor: pointer;
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    }
   }
 }
