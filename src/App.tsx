@@ -4,6 +4,8 @@ import { observer } from "mobx-react-lite";
 import { useStore } from './stores';
 import { Sidebar } from './components/sidebar/sidebar';
 import { Header } from './components/header/header';
+import { Breadcrumbs } from './components/breadcrumbs';
+import { Layout } from './components/layout';
 
 export const App: FC = observer(() => {
   const appStore = useStore("appStore");
@@ -13,7 +15,8 @@ export const App: FC = observer(() => {
       <Sidebar />
       <div className={"content"}>
         <Header />
-        {appStore.selectedCity}
+        <Breadcrumbs />
+        <Layout />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { observer } from "mobx-react";
 import { CSSProperties, FC } from "react";
 
 interface IProps {

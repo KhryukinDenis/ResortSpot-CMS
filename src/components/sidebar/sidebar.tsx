@@ -7,18 +7,32 @@ import { Select } from "../ui/abstract/select/select";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores";
+import { Category } from "../../model/category";
+import { Categories, Cities } from "../../mock/mock";
 
 export const Sidebar: FC = observer(() => {
-  const Cities = ['Анапа', 'Новороссийск', 'Кабардинка', 'Геленджик', 'Дивноморское', 'Джубга', 'Туапсе', 'Лазоревское', 'Сочи', 'Адлер'];
-  const Categories = ['Отели', 'Природа', 'Культура', 'Развлечения'];
-
   const appStore = useStore("appStore");
-
   const navigate = useNavigate();
 
-  const setActiveCity = (city: string) => {
-    appStore.setSelectedCity(city);
-    console.log(appStore.selectedCity);
+  const onSelect = (cityName: string) => {
+    const selectedCity = Cities.find(city => city.name_rus === cityName);
+    if (selectedCity) { 
+      appStore.setSelectedCity(selectedCity);
+      appStore.setSelectedCategory(null);
+    }
+  };
+
+  const categoryClick = (category: Category) => {
+    appStore.setSelectedCategory(category);
+    if (appStore.selectedCity && appStore.selectedCategory) {
+      navigate(`${appStore.selectedCity.name}/${appStore.selectedCategory.name}`);
+    }
+  };
+
+  const panelClick = () => {
+    navigate('/');
+    appStore.setSelectedCity(null);
+    appStore.setSelectedCategory(null);
   };
 
   return (
@@ -31,24 +45,27 @@ export const Sidebar: FC = observer(() => {
         <Img src={exit}/>
       </div>
 
-      <div className={s.panel} onClick={() => navigate('/')}>
+      <div className={s.panel} onClick={panelClick}>
         <Img src={panel}/>
         <div>Панель управления</div>
       </div>
 
       <Select 
-        options={Cities}
-        option={appStore.selectedCity}
+        options={Cities.map(city => city.name_rus)}
+        option={appStore.selectedCity ? appStore.selectedCity?.name_rus : null}
         placeholder={'Выберите город'}
         style={{ marginBottom: '20px' }}
-        onChange={(city) => setActiveCity(city)}
+        onChange={(cityName) => {onSelect(cityName)}}
       />
 
-      {appStore.selectedCity !== null && (
+      {appStore.selectedCity && (
         <>
           {Categories.map((category) => (
-            <div className={s.category}>
-              {category}
+            <div 
+              className={s.category} 
+              onClick={() => categoryClick(category)}
+            >
+              {category.name_rus}
             </div>
           ))}
         </>
