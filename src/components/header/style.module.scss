@@ -11,15 +11,18 @@
   padding: 20px 100px;
 
   .logo {
-    scale: 0.5;
+    display: flex;
+    height: 100%;
 
-    &:hover {
-      scale: 0.51;
-      cursor: pointer;
-    }
-
-    &:active {
-      scale: 0.52;
+    .img {
+      &:hover {
+        scale: 1.01;
+        cursor: pointer;
+      }
+  
+      &:active {
+        scale: 1.02;
+      }
     }
   }
 }

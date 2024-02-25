@@ -9,7 +9,9 @@ export const Header: FC = () => {
 
   return (
     <div className={s.header}>
-      <Img src={logo} className={s.logo} onClick={() => navigate('/')}/>
+      <div className={s.logo}>
+        <Img src={logo} className={s.img} onClick={() => navigate('/')}/>
+      </div>
       <div>ResortSpot: Система управления контентом</div>
     </div>
   );

@@ -1,17 +1,11 @@
-import { action, observable } from "mobx";
-import { RootStore } from "./root";
+import { action, makeAutoObservable, observable } from "mobx";
 
 export class AppStore {
-  rootStore: RootStore;
-
-  constructor(rootStore: RootStore) {
-    this.rootStore = rootStore;
-  }
+  constructor() {makeAutoObservable(this)}
 
   @observable selectedCity: string | null = null;
 
-  @action
-  setSelectedCity = (city: string | null) => {
+  @action setSelectedCity = (city: string | null) => {
     this.selectedCity = city;
   }
 }

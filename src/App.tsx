@@ -1,20 +1,19 @@
-import React, { FC, useContext } from 'react';
 import './styles.scss';
-import { observer } from 'mobx-react';
-import { Header } from './components/header/header';
+import { FC } from 'react';
+import { observer } from "mobx-react-lite";
+import { useStore } from './stores';
 import { Sidebar } from './components/sidebar/sidebar';
-import { RootStoreContext } from './stores/root';
+import { Header } from './components/header/header';
 
 export const App: FC = observer(() => {
-  const rootStore = useContext(RootStoreContext);
-	const appStore = rootStore.appStore;
+  const appStore = useStore("appStore");
 
   return (
     <div className={"App"}>
       <Sidebar />
       <div className={"content"}>
         <Header />
-        <div>{appStore.selectedCity}</div>
+        {appStore.selectedCity}
       </div>
     </div>
   );
