@@ -1,7 +1,6 @@
 import { FC } from "react";
 import s from "./style.module.scss";
 import { Route, Routes } from "react-router-dom";
-import { useStore } from "../../stores";
 import { observer } from "mobx-react-lite";
 import { Cities } from "../../mock/mock";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
@@ -17,8 +16,6 @@ import { MainPage } from "../../pages/MainPage";
 import { NotFoundPage } from "../../pages/NotFoundPage";
 
 export const Router: FC = observer(() => {
-  const appStore = useStore("appStore");
-
   useDidMountEffect(() => {
     // TODO: Запрос за массивом городов
   });

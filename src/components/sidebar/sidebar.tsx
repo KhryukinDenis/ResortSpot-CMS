@@ -11,28 +11,29 @@ import { Category } from "../../model/category";
 import { Categories, Cities } from "../../mock/mock";
 
 export const Sidebar: FC = observer(() => {
-  const appStore = useStore("appStore");
+  const cityStore = useStore("cityStore");
+  const categoryStore = useStore("categoryStore");
   const navigate = useNavigate();
 
   const onSelect = (cityName: string) => {
     const selectedCity = Cities.find(city => city.name_rus === cityName);
     if (selectedCity) { 
-      appStore.setSelectedCity(selectedCity);
-      appStore.setSelectedCategory(null);
+      cityStore.setSelectedCity(selectedCity);
+      categoryStore.setSelectedCategory(null);
     }
   }; 
 
   const categoryClick = (category: Category) => {
-    appStore.setSelectedCategory(category);
-    if (appStore.selectedCity && appStore.selectedCategory) {
-      navigate(`${appStore.selectedCity.name}/${appStore.selectedCategory.name}`);
+    categoryStore.setSelectedCategory(category);
+    if (cityStore.selectedCity && categoryStore.selectedCategory) {
+      navigate(`${cityStore.selectedCity.name}/${categoryStore.selectedCategory.name}`);
     }
   };
 
   const panelClick = () => {
     navigate('/');
-    appStore.setSelectedCity(null);
-    appStore.setSelectedCategory(null);
+    cityStore.setSelectedCity(null);
+    categoryStore.setSelectedCategory(null);
   };
 
   return (
@@ -52,13 +53,13 @@ export const Sidebar: FC = observer(() => {
 
       <Select 
         options={Cities.map(city => city.name_rus)}
-        option={appStore.selectedCity ? appStore.selectedCity?.name_rus : null}
+        option={cityStore.selectedCity ? cityStore.selectedCity?.name_rus : null}
         placeholder={'Выберите город'}
         style={{ marginBottom: '20px' }}
         onChange={(cityName) => {onSelect(cityName)}}
       />
 
-      {appStore.selectedCity && (
+      {cityStore.selectedCity && (
         <>
           {Categories.map((category) => (
             <div 

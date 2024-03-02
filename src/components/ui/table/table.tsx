@@ -20,11 +20,12 @@ interface IProps {
 }
 
 export const Table: FC<IProps> = observer((props) => {
-  const appStore = useStore("appStore");
+  const cityStore = useStore("cityStore");
+  const categoryStore = useStore("categoryStore");
   
   function titleTable() {
-    if (appStore.selectedCity && appStore.selectedCategory) {
-      return `${appStore.selectedCity.name_rus}/${appStore.selectedCategory.name_rus}`
+    if (cityStore.selectedCity && categoryStore.selectedCategory) {
+      return `${cityStore.selectedCity.name_rus}/${categoryStore.selectedCategory.name_rus}`
     } else {
       return 'Название таблицы'
     }

@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "../../stores";
 
 export const Header: FC = () => {
-  const appStore = useStore("appStore");
+  const cityStore = useStore("cityStore");
+  const categoryStore = useStore("categoryStore");
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate('/');
-    appStore.setSelectedCity(null);
-    appStore.setSelectedCategory(null);
+    cityStore.setSelectedCity(null);
+    categoryStore.setSelectedCategory(null);
   };
 
   return (

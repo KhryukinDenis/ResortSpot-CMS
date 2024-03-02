@@ -1,22 +1,22 @@
-export class City {
+export class Nature {
   id: number;
   name: string;
-  name_rus: string;
-  description?: string;
+  description: string;
+  description_min: string;
 
   constructor(source: any) {
     this.id = source.id;
     this.name = source.name;
-    this.name_rus = source.name_rus;
     this.description = source.description;
+    this.description_min = source.description_min;
   }
 
-  static mapToDto = (model?: City): any => {
+  static mapToDto = (model?: Nature): any => {
     return {
       id: model?.id,
       name: model?.name,
-      name_rus: model?.name_rus,
       description: model?.description,
+      description_min: model?.description_min,  
     }
   }
-} 
+}
