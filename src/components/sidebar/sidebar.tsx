@@ -20,7 +20,7 @@ export const Sidebar: FC = observer(() => {
       appStore.setSelectedCity(selectedCity);
       appStore.setSelectedCategory(null);
     }
-  };
+  }; 
 
   const categoryClick = (category: Category) => {
     appStore.setSelectedCategory(category);

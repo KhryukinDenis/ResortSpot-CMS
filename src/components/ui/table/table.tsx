@@ -5,11 +5,12 @@ import tableIcons from "../../../utils/MaterialTableIcons";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from "@material-ui/icons/AddBox";
+import { useStore } from "../../../stores";
 
 interface IProps {
   data: any[];
   column: any[];
-  title: string;
+  title?: string;
   canEdit?: boolean;
   canAdd?: boolean;
   canDelete?: boolean;
@@ -19,10 +20,20 @@ interface IProps {
 }
 
 export const Table: FC<IProps> = observer((props) => {
+  const appStore = useStore("appStore");
+  
+  function titleTable() {
+    if (appStore.selectedCity && appStore.selectedCategory) {
+      return `${appStore.selectedCity.name_rus}/${appStore.selectedCategory.name_rus}`
+    } else {
+      return 'Название таблицы'
+    }
+  }
+
   return (
     <>
       <MaterialTable
-        title={props.title}
+        title={props.title || titleTable()}
         data={props.data}
         columns={props.column}
         icons={tableIcons}
@@ -50,7 +61,7 @@ export const Table: FC<IProps> = observer((props) => {
         localization={{
           toolbar: {
             searchPlaceholder: "Поиск",
-            searchTooltip: "Найти"
+            searchTooltip: "Найти",
           },
           header: {
             actions: "Действия",
@@ -60,8 +71,8 @@ export const Table: FC<IProps> = observer((props) => {
             firstTooltip: "Первая страница",
             lastTooltip: "Последняя страница",
             previousTooltip: "Назад",
-            nextTooltip: "Вперед"
-          }
+            nextTooltip: "Вперед",
+          },
         }}
       />
     </>
