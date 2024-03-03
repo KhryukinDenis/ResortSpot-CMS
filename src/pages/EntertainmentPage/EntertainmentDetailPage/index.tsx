@@ -1,16 +1,58 @@
 import { observer } from "mobx-react-lite";
-import { FC } from "react";
+import { FC, useState } from "react";
 import s from "./style.module.scss";
+import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
+import { Entertainment } from "../../../model/entertainment";
+import { Entertainments } from "../../../mock/mock";
+import { useStore } from "../../../stores";
+import { useIdParams } from "../../../hooks/useIdParams";
+import { TextInput } from "../../../components/ui/text-input";
+import { setDeep } from "../../../utils/setDeep";
+import { NumberInput } from "../../../components/ui/number-input";
+import { Textarea } from "../../../components/ui/textarea";
 
-interface IProps {
+interface IProps { }
 
-}
+export const EntertainmentDetailPage: FC = observer(() => {
+  const { id } = useIdParams();
+  const entertainmentStore = useStore("entertainmentStore");
+  const [data, setData] = useState<Entertainment | null>(null);
 
-export const EntertainmentDetailPage: FC<IProps> = observer((props) => {
+  const arr = Entertainments;
+
+  useDidMountEffect(() => {
+    // entertainmentStore.fetchById(id);
+    // setData(entertainmentStore.entertainment);
+    setData(arr[0]);
+  });
+
+  function setField(field: string, val: any) {
+    setDeep(data, field, val, setData);
+  };
 
   return (
-    <>
-      EntertainmentDetailPage
-    </>
+    <div className={s.wrapper}>
+      <TextInput 
+        value={data?.name}
+        onChange={(val) => setField('name', val)}
+        title={'Название'}
+      />
+      <Textarea 
+        value={data?.description_min}
+        onChange={(val) => setField('description_min', val)}
+        title={'Краткое описание (для карточки в списке)'}
+        maxCount={550}
+      />
+      <NumberInput 
+        value={data?.count_people}
+        onChange={(val) => setField('count_people', val)}
+        title={'Количество человек'}
+      />
+      <NumberInput 
+        value={data?.price}
+        onChange={(val) => setField('price', val)}
+        title={'Цена, ₽'}
+      />
+    </div>
   );
 });

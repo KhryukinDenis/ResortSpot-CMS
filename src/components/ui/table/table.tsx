@@ -14,7 +14,7 @@ interface IProps {
   canEdit?: boolean;
   canAdd?: boolean;
   canDelete?: boolean;
-  onEdit?: () => void;
+  onEdit?: (rowData: any) => any;
   onAdd?: () => void;
   onDelete?: () => void;
 }
@@ -38,25 +38,38 @@ export const Table: FC<IProps> = observer((props) => {
         data={props.data}
         columns={props.column}
         icons={tableIcons}
+        // actions={[
+        //   {
+        //     icon: EditIcon,
+        //     tooltip: "Редактировать",
+        //     onClick: (rowData) => console.log(rowData),
+        //     hidden: !props.canEdit,
+        //   },
+        //   {
+        //     icon: DeleteIcon,
+        //     tooltip: "Удалить",
+        //     onClick: () => props.onDelete?.(),
+        //     hidden: !props.canDelete,
+        //   },
+        //   {
+        //     icon: AddIcon,
+        //     tooltip: "Добавить",
+        //     isFreeAction: true,
+        //     onClick: () => props.onAdd?.(),
+        //     hidden: !props.canAdd,
+        //   },
+        // ]}
         actions={[
-          {
-            icon: DeleteIcon,
-            tooltip: "Удалить",
-            onClick: () => props.onDelete,
-            hidden: !props.canDelete,
-          },
-          {
-            icon: EditIcon,
-            tooltip: "Редактировать",
-            onClick: () => props.onEdit,
-            hidden: !props.canEdit,
-          },
-          {
-            icon: AddIcon,
-            tooltip: "Добавить",
-            isFreeAction: true,
-            onClick: () => props.onAdd,
-            hidden: !props.canAdd,
+          //@ts-ignore
+          (rowData) => {
+            if (props.onEdit) {
+              return {
+                icon: EditIcon,
+                tooltip: "Редактировать",
+                hidden: !props.canEdit,
+                onClick: () => props.onEdit?.(rowData)
+              }
+            }
           },
         ]}
         localization={{

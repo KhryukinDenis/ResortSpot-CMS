@@ -1,0 +1,51 @@
+.block {
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  height: 200px;
+  padding: 2px 5px;
+  border: 1px solid #E8E9EC;
+  border-radius: 5px;
+  position: relative;
+
+  textarea {
+    border: none;
+    margin: 0;
+    background: none;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    width: 100%;
+    height: 90%;
+
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+
+  .count { 
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    font-size: 12px;
+  }
+}
+
+.title {
+  font-size: 11px;
+  margin: 0 0 2px 2px;
+  color: black;
+  position: relative;
+}
+
+.slide_in {
+  opacity: 1;
+  transform: translateY(0%);
+  transition: transform 0.5s ease-out, opacity 0.1s ease-out;
+}
+
+.slide_out {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.5s ease-out, opacity 0.2s ease-out;
+}
