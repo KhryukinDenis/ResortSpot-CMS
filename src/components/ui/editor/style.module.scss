@@ -1,0 +1,116 @@
+.editor_wrapper {
+  width: 800px;
+  border: 1px solid #E8E9EC;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px;
+}
+
+.editor_container {
+  width: 100%;
+  padding: 10px 30px;
+  border: 1px solid #E8E9EC;
+  border-radius: 5px;
+}
+
+.editor_toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  text-align: center;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+
+.download {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.toolbar_grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 1fr 1fr;
+}
+
+button {
+  margin-right: 8px;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+}
+
+.superFancyBlockquote {
+  color: #999;
+  background: #fff;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  border-left: 2px solid #999;
+  padding-left: 10px;
+}
+
+.codeBlock {
+  font-family: fira-code, monospace;
+  font-size: inherit;
+  background: #ffeff0;
+  font-style: italic;
+  word-wrap: normal;
+  word-wrap: break-word;
+  box-decoration-break: slice;
+  padding: 0.3rem 2rem;
+  border-radius: 0.2rem;
+}
+
+.leftAlign {
+  text-align: left;
+  font-style: none;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+.centerAlign {
+  text-align: center;
+}
+
+.h1 {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.h2 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.h3 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.h4 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.h5 {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.h6 {
+  font-size: 9px;
+  font-weight: normal;
+}
+
+.title {
+  font-size: 11px;
+  margin: 0 0 2px 2px;
+  color: black;
+}

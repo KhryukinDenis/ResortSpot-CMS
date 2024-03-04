@@ -10,6 +10,7 @@ import { TextInput } from "../../../components/ui/text-input";
 import { setDeep } from "../../../utils/setDeep";
 import { NumberInput } from "../../../components/ui/number-input";
 import { Textarea } from "../../../components/ui/textarea";
+import { TextEditor } from "../../../components/ui/editor";
 
 interface IProps { }
 
@@ -37,12 +38,6 @@ export const EntertainmentDetailPage: FC = observer(() => {
         onChange={(val) => setField('name', val)}
         title={'Название'}
       />
-      <Textarea 
-        value={data?.description_min}
-        onChange={(val) => setField('description_min', val)}
-        title={'Краткое описание (для карточки в списке)'}
-        maxCount={550}
-      />
       <NumberInput 
         value={data?.count_people}
         onChange={(val) => setField('count_people', val)}
@@ -52,6 +47,17 @@ export const EntertainmentDetailPage: FC = observer(() => {
         value={data?.price}
         onChange={(val) => setField('price', val)}
         title={'Цена, ₽'}
+      />
+      <Textarea 
+        value={data?.description_min}
+        onChange={(val) => setField('description_min', val)}
+        title={'Краткое описание (для карточки в списке)'}
+        maxCount={550}
+      />
+      <TextEditor 
+        value={data?.description}
+        onChange={(val) => setField('description', val)}
+        title={'Описание'}
       />
     </div>
   );
