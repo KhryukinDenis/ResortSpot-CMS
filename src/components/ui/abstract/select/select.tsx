@@ -6,9 +6,10 @@ import arrowTop from "../../../../assets/images/icons/arrow_top.svg";
 import { observer } from "mobx-react-lite";
 
 interface IProps {
-  options: string[];
-  option: string | null;
+  options: any[];
+  option: string | number | null | undefined;
   placeholder?: string;
+  title?: string;
   style?: CSSProperties;
   onChange?: (option: string) => void;
 }
@@ -27,6 +28,7 @@ export const Select: FC<IProps> = observer((props) => {
 
   return (
     <div className={s.wrapper} style={props.style}>
+      {props.title && <div className={`${s.title} ${props.option ? s.slide_in : s.slide_out}`}>{props.title}</div>}
       <div className={s.input} onClick={handleClick}>
         {props.option || (props.placeholder + ':')}
         {!isOpen && <Img src={arrowBottom} />}

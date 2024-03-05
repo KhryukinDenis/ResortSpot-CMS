@@ -12,8 +12,6 @@ import { NumberInput } from "../../../components/ui/number-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
 
-interface IProps { }
-
 export const EntertainmentDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const entertainmentStore = useStore("entertainmentStore");
@@ -47,6 +45,12 @@ export const EntertainmentDetailPage: FC = observer(() => {
         value={data?.price}
         onChange={(val) => setField('price', val)}
         title={'Цена, ₽'}
+      />
+      {/* TODO: Подумать над типом данных и компонентом */}
+      <TextInput 
+        value={data?.time}
+        onChange={(val) => setField('time', val)}
+        title={'Время'}
       />
       <Textarea 
         value={data?.description_min}

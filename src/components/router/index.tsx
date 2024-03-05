@@ -14,6 +14,8 @@ import { CultureDetailPage } from "../../pages/CulturePage/CultureDetailPage";
 import { EntertainmentDetailPage } from "../../pages/EntertainmentPage/EntertainmentDetailPage";
 import { MainPage } from "../../pages/MainPage";
 import { NotFoundPage } from "../../pages/NotFoundPage";
+import { RoomDetailPage } from "../../pages/RoomPage/RoomDetailPage";
+import { RestDetailPage } from "../../pages/RestPage/RestDetailPage";
 
 export const Router: FC = observer(() => {
   useDidMountEffect(() => {
@@ -67,6 +69,17 @@ export const Router: FC = observer(() => {
               key={`/${city.name}/entertainment/:id`}
               path={`/${city.name}/entertainment/:id`}
               element={<EntertainmentDetailPage />}
+            />
+
+            <Route
+              key={`/${city.name}/hotel/:id/room/:id`}
+              path={`/${city.name}/hotel/:id/room/:id`}
+              element={<RoomDetailPage />}
+            />
+            <Route
+              key={`/${city.name}/hotel/:id/rest/:id`}
+              path={`/${city.name}/hotel/:id/rest/:id`}
+              element={<RestDetailPage />}
             />
           </>
         )}

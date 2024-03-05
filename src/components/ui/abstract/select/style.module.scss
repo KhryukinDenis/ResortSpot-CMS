@@ -42,3 +42,22 @@
     }
   }
 }
+
+.title {
+  font-size: 11px;
+  margin: 0 0 2px 2px;
+  color: black;
+  position: relative;
+}
+
+.slide_in {
+  opacity: 1;
+  transform: translateY(0%);
+  transition: transform 0.5s ease-out, opacity 0.1s ease-out;
+}
+
+.slide_out {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.5s ease-out, opacity 0.2s ease-out;
+}
