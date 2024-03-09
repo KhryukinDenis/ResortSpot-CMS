@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 25px;
+    margin-bottom: 30px;
+  }
+
+  .headerMin {
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-indent: 20px;
+  }
+
+  .text {
+    font-size: 18px;
+    margin-bottom: 10px;
+
+    .link {
+      text-decoration: underline;
+      color: darkblue;
+
+      &:hover {
+        cursor: pointer;
+        font-weight: bold;
+      }
+    }
+  }
+}
