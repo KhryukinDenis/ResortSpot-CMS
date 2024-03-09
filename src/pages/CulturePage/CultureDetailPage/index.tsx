@@ -10,26 +10,53 @@ import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
+import { Button } from "../../../components/ui/button";
 
 export const CultureDetailPage: FC = observer(() => {
   const { id } = useIdParams();
+  const isEdit = !!id;
   const cultureStore = useStore("cultureStore");
   const [data, setData] = useState<Culture | null>(null);
 
   const arr = Cultures;
 
   useDidMountEffect(() => {
-    // cultureStore.fetchById(id);
-    // setData(cultureStore.culture);
-    setData(arr[0]);
+    if (isEdit) {
+      // cultureStore.fetchById(id);
+      // setData(cultureStore.culture);
+      setData(arr[0]);
+    } else {
+      // cultureStore.createNew();
+      setData(new Culture({}));
+    }
   });
+
+  const updateCulture = () => {
+    if (data) {
+      if (isEdit) {
+        cultureStore.update(data);
+        cultureStore.setCanEdit(false);
+      } else {
+        // Пушим data в массив 
+        cultureStore.setCanEdit(false);
+      }
+    }
+  };
 
   function setField(field: string, val: any) {
     setDeep(data, field, val, setData);
+    cultureStore.setCanEdit(true);
   };
   
   return (
     <div className={s.wrapper}>
+      <div className={s.btn}>
+        <Button
+          title={isEdit ? 'Сохранить' : 'Создать'}
+          onClick={() => updateCulture()}
+          disabled={!cultureStore.canEdit}
+        />
+      </div>
       <TextInput 
         value={data?.name}
         onChange={(val) => setField('name', val)}

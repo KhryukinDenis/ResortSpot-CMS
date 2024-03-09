@@ -13,7 +13,7 @@ interface IProps { }
 export const HotelPage: FC<IProps> = observer((props) => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
-  // const hotelStore = useStore("hotelStore");
+  const hotelStore = useStore("hotelStore");
   const [data, setData] = useState<Hotel[]>([]);
 
   const columns = [
@@ -25,6 +25,14 @@ export const HotelPage: FC<IProps> = observer((props) => {
 
   const handleEdit = (id: number) => {
     navigate(`/${cityStore.selectedCity?.name}/hotel/${id}`)
+  };
+
+  const handleDelete = (id: number) => {
+    hotelStore.delete(id);
+  };
+
+  const handleAdd = () => {
+    navigate(`/${cityStore.selectedCity?.name}/hotel/create`);
   };
 
   useDidMountEffect(() => {
@@ -41,6 +49,8 @@ export const HotelPage: FC<IProps> = observer((props) => {
       canAdd
       canEdit
       onEdit={(data) => handleEdit(data.id)}
+      onDelete={(data) => handleDelete(data.id)}
+      onAdd={() => handleAdd()}
     />
   );
 });

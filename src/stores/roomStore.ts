@@ -9,6 +9,7 @@ export class RoomStore {
 
   @observable rooms: Room[] = [];
   @observable room: Room | null = null;
+  @observable canEdit: boolean = false
 
   @action
   fetchAll = () => {
@@ -50,5 +51,21 @@ export class RoomStore {
         console.log('Ошибка при удалении номера', error);
         return false;
       });
+  };
+
+  @action 
+  setRoom = (room: Room | null) => {
+    this.room = room;
+  };
+
+  @action
+  createNew = () => {
+    this.setCanEdit(false);
+    this.setRoom(new Room({}));
+  };
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

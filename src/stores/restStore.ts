@@ -9,6 +9,7 @@ export class RestStore {
 
   @observable rests: Rest[] = [];
   @observable rest: Rest | null = null;
+  @observable canEdit: boolean = false;
 
   @action
   fetchAll = () => {
@@ -50,5 +51,21 @@ export class RestStore {
         console.log('Ошибка при удалении объект отдыха', error);
         return false;
       });
+  };
+
+  @action 
+  setRest = (rest: Rest | null) => {
+    this.rest = rest;
+  };
+
+  @action
+  createNew = () => {
+    this.setCanEdit(false);
+    this.setRest(new Rest({}));
+  };
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

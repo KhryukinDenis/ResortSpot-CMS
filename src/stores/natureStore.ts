@@ -9,6 +9,7 @@ export class NatureStore {
 
   @observable natures: Nature[] = [];
   @observable nature: Nature | null = null;
+  @observable canEdit: boolean = false;
 
   @action
   fetchAll = () => {
@@ -50,5 +51,21 @@ export class NatureStore {
         console.log('Ошибка при удалении объекта природы', error);
         return false;
       });
+  };
+
+  @action 
+  setNature = (nature: Nature | null) => {
+    this.nature = nature;
+  };
+
+  @action
+  createNew = () => {
+    this.setCanEdit(false);
+    this.setNature(new Nature({}));
+  };
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

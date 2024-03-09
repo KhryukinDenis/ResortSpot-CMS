@@ -9,6 +9,7 @@ export class CultureStore {
 
   @observable cultures: Culture[] = [];
   @observable culture: Culture | null = null;
+  @observable canEdit: boolean = false;
 
   @action
   fetchAll = () => {
@@ -50,5 +51,21 @@ export class CultureStore {
         console.log('Ошибка при удалении объект культуры', error);
         return false;
       });
+  };
+
+  @action 
+  setCulture = (culture: Culture | null) => {
+    this.culture = culture;
+  };
+
+  @action
+  createNew = () => {
+    this.setCanEdit(false);
+    this.setCulture(new Culture({}));
+  };
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

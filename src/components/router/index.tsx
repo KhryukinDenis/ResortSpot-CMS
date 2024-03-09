@@ -81,6 +81,37 @@ export const Router: FC = observer(() => {
               path={`/${city.name}/hotel/:id/rest/:id`}
               element={<RestDetailPage />}
             />
+
+            <Route
+              key={`/${city.name}/hotel/create`}
+              path={`/${city.name}/hotel/create`}
+              element={<HotelDetailPage />}
+            />
+            <Route
+              key={`/${city.name}/nature/create`}
+              path={`/${city.name}/nature/create`}
+              element={<NatureDetailPage />}
+            />
+            <Route
+              key={`/${city.name}/culture/create`}
+              path={`/${city.name}/culture/create`}
+              element={<CultureDetailPage />}
+            />
+            <Route
+              key={`/${city.name}/entertainment/create`}
+              path={`/${city.name}/entertainment/create`}
+              element={<EntertainmentDetailPage />}
+            />
+            <Route
+              key={`/${city.name}/room/create`}
+              path={`/${city.name}/room/create`}
+              element={<RoomDetailPage />}
+            />
+            <Route
+              key={`/${city.name}/rest/create`}
+              path={`/${city.name}/rest/create`}
+              element={<RestDetailPage />}
+            />
           </>
         )}
 

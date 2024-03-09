@@ -70,7 +70,6 @@ export const TextEditor: FC<IProps> = observer((props) => {
 
   const myBlockStyleFn = (contentBlock: ContentBlock): string => {
     const type: DraftBlockType = contentBlock.getType();
-    console.log(type);
     switch (type) {
       case 'blockQuote':
         return s.superFancyBlockquote;
@@ -112,7 +111,7 @@ export const TextEditor: FC<IProps> = observer((props) => {
         <div className={s.editor_container}>
           <Editor
             ref={editor}
-            placeholder={'Нажмите кнопку "Загрузить" в левом верхнем углу, чтобы отобразить в редакторе имеющийся текст. Если текст не задан - задайте его.'}
+            placeholder={'Нажмите кнопку "Загрузить" в левом верхнем углу, чтобы отобразить в редакторе имеющийся текст. Если текст не задан - задайте его, установив курсор ниже.'}
             handleKeyCommand={handleKeyCommand}
             editorState={editorState}
             blockStyleFn={myBlockStyleFn}  

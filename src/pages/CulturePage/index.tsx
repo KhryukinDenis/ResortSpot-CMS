@@ -13,7 +13,7 @@ interface IProps { }
 export const CulturePage: FC<IProps> = observer((props) => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
-  // const cultureStore = useStore("cultureStore");
+  const cultureStore = useStore("cultureStore");
   const [data, setData] = useState<Culture[]>([]);
   
   const columns = [
@@ -24,6 +24,14 @@ export const CulturePage: FC<IProps> = observer((props) => {
 
   const handleEdit = (id: number) => {
     navigate(`/${cityStore.selectedCity?.name}/culture/${id}`)
+  };
+
+  const handleDelete = (id: number) => {
+    cultureStore.delete(id);
+  };
+
+  const handleAdd = () => {
+    navigate(`/${cityStore.selectedCity?.name}/culture/create`);
   };
 
   useDidMountEffect(() => {
@@ -40,6 +48,8 @@ export const CulturePage: FC<IProps> = observer((props) => {
       canAdd
       canEdit
       onEdit={(data) => handleEdit(data.id)}
+      onDelete={(data) => handleDelete(data.id)}
+      onAdd={() => handleAdd()}
     />
   );
 });

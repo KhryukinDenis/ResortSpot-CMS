@@ -10,26 +10,53 @@ import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
+import { Button } from "../../../components/ui/button";
 
 export const NatureDetailPage: FC = observer(() => {
   const { id } = useIdParams();
+  const isEdit = !!id;
   const natureStore = useStore("natureStore");
   const [data, setData] = useState<Nature | null>(null);
 
   const arr = Natures;
 
   useDidMountEffect(() => {
-    // natureStore.fetchById(id);
-    // setData(natureStore.nature);
-    setData(arr[0]);
+    if (isEdit) {
+      // natureStore.fetchById(id);
+      // setData(natureStore.nature);
+      setData(arr[0]);
+    } else {
+      // natureStore.createNew();
+      setData(new Nature({}));
+    }
   });
+
+  const updateNature = () => {
+    if (data) {
+      if (isEdit) {
+        natureStore.update(data);
+        natureStore.setCanEdit(false);
+      } else {
+        // Пушим data в массив 
+        natureStore.setCanEdit(false);
+      }
+    }
+  };
 
   function setField(field: string, val: any) {
     setDeep(data, field, val, setData);
+    natureStore.setCanEdit(true);
   };
   
   return (
     <div className={s.wrapper}>
+      <div className={s.btn}>
+        <Button 
+          title={isEdit ? 'Сохранить' : 'Создать'}
+          onClick={() => updateNature()}
+          disabled={!natureStore.canEdit}
+        />
+      </div>
       <TextInput 
         value={data?.name}
         onChange={(val) => setField('name', val)}

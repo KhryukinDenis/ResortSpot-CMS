@@ -9,6 +9,7 @@ export class HotelStore {
 
   @observable hotels: Hotel[] = [];
   @observable hotel: Hotel | null = null;
+  @observable canEdit: boolean = false;
 
   @action
   fetchAll = () => {
@@ -50,5 +51,21 @@ export class HotelStore {
         console.log('Ошибка при удалении отеля', error);
         return false;
       });
+  };
+
+  @action 
+  setHotel = (hotel: Hotel | null) => {
+    this.hotel = hotel;
+  };
+
+  @action
+  createNew = () => {
+    this.setCanEdit(false);
+    this.setHotel(new Hotel({}));
+  };
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

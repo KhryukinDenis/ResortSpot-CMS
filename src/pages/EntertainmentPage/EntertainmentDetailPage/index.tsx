@@ -12,26 +12,53 @@ import { NumberInput } from "../../../components/ui/number-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
 import { TimePicker } from "../../../components/ui/time-picker";
+import { Button } from "../../../components/ui/button";
 
 export const EntertainmentDetailPage: FC = observer(() => {
   const { id } = useIdParams();
+  const isEdit = !!id;
   const entertainmentStore = useStore("entertainmentStore");
   const [data, setData] = useState<Entertainment | null>(null);
 
   const arr = Entertainments;
 
   useDidMountEffect(() => {
-    // entertainmentStore.fetchById(id);
-    // setData(entertainmentStore.entertainment);
-    setData(arr[0]);
+    if (isEdit) {
+      // entertainmentStore.fetchById(id);
+      // setData(entertainmentStore.entertainment);
+      setData(arr[0]);
+    } else {
+      // natureStore.createNew();
+      setData(new Entertainment({}));
+    }
   });
+
+  const updateEntertainment = () => {
+    if (data) {
+      if (isEdit) {
+        entertainmentStore.update(data);
+        entertainmentStore.setCanEdit(false);
+      } else {
+        // Пушим data в массив 
+        entertainmentStore.setCanEdit(false);
+      }
+    }
+  };
 
   function setField(field: string, val: any) {
     setDeep(data, field, val, setData);
+    entertainmentStore.setCanEdit(true);
   };
 
   return (
     <div className={s.wrapper}>
+      <div className={s.btn}>
+        <Button
+          title={isEdit ? 'Сохранить' : 'Создать'}
+          onClick={() => updateEntertainment()}
+          disabled={!entertainmentStore.canEdit}
+        />
+      </div>
       <TextInput 
         value={data?.name}
         onChange={(val) => setField('name', val)}

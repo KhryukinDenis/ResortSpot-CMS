@@ -13,7 +13,7 @@ interface IProps { }
 export const NaturePage: FC<IProps> = observer((props) => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
-  // const natureStore = useStore("natureStore");
+  const natureStore = useStore("natureStore");
   const [data, setData] = useState<Nature[]>([]);
   
   const columns = [
@@ -22,7 +22,15 @@ export const NaturePage: FC<IProps> = observer((props) => {
   ];
 
   const handleEdit = (id: number) => {
-    navigate(`/${cityStore.selectedCity?.name}/nature/${id}`)
+    navigate(`/${cityStore.selectedCity?.name}/nature/${id}`);
+  };
+
+  const handleDelete = (id: number) => {
+    natureStore.delete(id);
+  };
+
+  const handleAdd = () => {
+    navigate(`/${cityStore.selectedCity?.name}/nature/create`);
   };
 
   useDidMountEffect(() => {
@@ -39,6 +47,8 @@ export const NaturePage: FC<IProps> = observer((props) => {
       canAdd
       canEdit
       onEdit={(data) => handleEdit(data.id)}
+      onDelete={(data) => handleDelete(data.id)}
+      onAdd={() => handleAdd()}
     />
   );
 });

@@ -9,6 +9,7 @@ export class EntertainmentStore {
 
   @observable entertainments: Entertainment[] = [];
   @observable entertainment: Entertainment | null = null;
+  @observable canEdit: boolean = false;
 
   @action
   fetchAll = () => {
@@ -50,5 +51,21 @@ export class EntertainmentStore {
         console.log('Ошибка при удалении достопримечательности', error);
         return false;
       });
+  };
+
+  @action 
+  setEntertainment = (entertainment: Entertainment | null) => {
+    this.entertainment = entertainment;
+  };
+
+  @action
+  createNew = () => {
+    this.setCanEdit(false);
+    this.setEntertainment(new Entertainment({}));
+  };
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

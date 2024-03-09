@@ -4,4 +4,10 @@
   align-items: start;
   justify-content: center;
   gap: 20px;
+
+  .btn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+  }
 }
