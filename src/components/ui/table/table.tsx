@@ -1,6 +1,6 @@
 import MaterialTable from "material-table";
 import { observer } from "mobx-react-lite";
-import { FC } from "react";
+import { CSSProperties, FC } from "react";
 import tableIcons from "../../../utils/MaterialTableIcons";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from '@material-ui/icons/Edit';
@@ -17,6 +17,7 @@ interface IProps {
   onEdit?: (rowData: any) => any;
   onAdd?: () => void;
   onDelete?: () => void;
+  style?: CSSProperties;
 }
 
 export const Table: FC<IProps> = observer((props) => {
@@ -38,6 +39,7 @@ export const Table: FC<IProps> = observer((props) => {
         data={props.data}
         columns={props.column}
         icons={tableIcons}
+        style={props.style}
         // actions={[
         //   {
         //     icon: EditIcon,

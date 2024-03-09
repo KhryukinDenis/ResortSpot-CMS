@@ -1,8 +1,8 @@
 import { CSSProperties, FC, useState } from "react";
 import s from "./style.module.scss";
 import { Img } from "../image/img";
-import arrowBottom from "../../../../assets/images/icons/arrow_bottom.svg";
-import arrowTop from "../../../../assets/images/icons/arrow_top.svg";
+import arrowBottom from "../../../assets/images/icons/arrow_bottom.svg";
+import arrowTop from "../../../assets/images/icons/arrow_top.svg";
 import { observer } from "mobx-react-lite";
 
 interface IProps {

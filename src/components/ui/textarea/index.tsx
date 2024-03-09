@@ -20,7 +20,9 @@ export const Textarea: FC<IProps> = observer((props) => {
           placeholder={props.title}
           maxLength={props.maxCount}
         />
-        <div className={s.count}>{`${props.value?.length}/${props.maxCount}`}</div>
+        {props.maxCount && (
+          <div className={s.count}>{`${props.value?.length}/${props.maxCount}`}</div>
+        )}
       </div>
     </div>
   );

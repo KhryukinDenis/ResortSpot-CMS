@@ -1,3 +1,6 @@
+import { Rest } from "./rest";
+import { Room } from "./room";
+
 export class Hotel {
   id: number;
   name: string;
@@ -6,6 +9,8 @@ export class Hotel {
   distanse_sea: number;
   price: number;
   description: string;
+  rooms: Room[];
+  rests: Rest[];
 
   constructor(source: any) {
     this.id = source.id;
@@ -15,6 +20,8 @@ export class Hotel {
     this.distanse_sea = source.distanse_sea;
     this.price = source.price;
     this.description = source.description;
+    this.rooms = source.rooms;
+    this.rests = source.rests;
   }
 
   static mapToDto = (model?: Hotel): any => {
@@ -26,6 +33,8 @@ export class Hotel {
       distance_sea: model?.distanse_sea,
       price: model?.price,
       description: model?.description,
+      rooms: model?.rooms,
+      rests: model?.rests,
     }
   }
 }

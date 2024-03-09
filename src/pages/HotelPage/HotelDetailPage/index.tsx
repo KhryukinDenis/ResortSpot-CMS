@@ -8,14 +8,18 @@ import { Hotels } from "../../../mock/mock";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
-import { Select } from "../../../components/ui/abstract/select/select";
+import { Select } from "../../../components/ui/select/select";
 import { NumberInput } from "../../../components/ui/number-input";
 import { Textarea } from "../../../components/ui/textarea";
+import { Table } from "../../../components/ui/table/table";
+import { useNavigate } from "react-router-dom";
 
 export const HotelDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const hotelStore = useStore("hotelStore");
+  const cityStore = useStore("cityStore");
   const [data, setData] = useState<Hotel | null>(null);
+  const navigate = useNavigate();
 
   const arr = Hotels;
 
@@ -29,6 +33,42 @@ export const HotelDetailPage: FC = observer(() => {
 
   function setField(field: string, val: any) {
     setDeep(data, field, val, setData);
+  };
+
+  const columnsRoom = [
+    { title: "ID", field: "id" },
+    { title: "Название", field: "name" },
+    { title: "Кв. м.", field: "area" },
+    { title: "Кол-во человек", field: "count_people" },
+  ];
+
+  const columnsRest = [
+    { title: "ID", field: "id" },
+    { title: "Название", field: "name" },
+  ];
+
+  function titleTableRoom() {
+    if (data?.name) {
+      return `${data?.name}/Номера`
+    } else {
+      return 'Название таблицы'
+    }
+  };
+
+  function titleTableRest() {
+    if (data?.name) {
+      return `${data?.name}/Отдых`
+    } else {
+      return 'Название таблицы'
+    }
+  };
+
+  const handleEditRoom = (id_room: number) => {
+    navigate(`/${cityStore.selectedCity?.name}/hotel/${id}/room/${id_room}`)
+  };
+
+  const handleEditRest = (id_rest: number) => {
+    navigate(`/${cityStore.selectedCity?.name}/hotel/${id}/rest/${id_rest}`)
   };
 
   return (
@@ -46,7 +86,6 @@ export const HotelDetailPage: FC = observer(() => {
         placeholder={'Выберите кол-во звёзд'}
         style={{ width: '300px' }}
       />
-      {/* TODO: Подумать над типом данных и компонентом */}
       <TextInput
         value={data?.address}
         onChange={(val) => setField('address', val)}
@@ -67,6 +106,26 @@ export const HotelDetailPage: FC = observer(() => {
         onChange={(val) => setField('description', val)}
         title={'Краткое описание (для карточки в списке)'}
         maxCount={550}
+      />
+      <Table 
+        data={data?.rooms ? data?.rooms : []}
+        column={columnsRoom}
+        title={titleTableRoom()}
+        style={{ width: '100%' }}
+        canDelete
+        canAdd
+        canEdit
+        onEdit={(val) => handleEditRoom(val.id)}
+      />
+      <Table 
+        data={data?.rests ? data?.rests : []}
+        column={columnsRest}
+        title={titleTableRest()}
+        style={{ width: '100%' }}
+        canDelete
+        canAdd
+        canEdit
+        onEdit={(val) => handleEditRest(val.id)}
       />
     </div>
   );

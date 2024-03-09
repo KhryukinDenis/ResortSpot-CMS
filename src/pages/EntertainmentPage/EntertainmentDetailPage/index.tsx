@@ -11,6 +11,7 @@ import { setDeep } from "../../../utils/setDeep";
 import { NumberInput } from "../../../components/ui/number-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
+import { TimePicker } from "../../../components/ui/time-picker";
 
 export const EntertainmentDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -46,8 +47,7 @@ export const EntertainmentDetailPage: FC = observer(() => {
         onChange={(val) => setField('price', val)}
         title={'Цена, ₽'}
       />
-      {/* TODO: Подумать над типом данных и компонентом */}
-      <TextInput 
+      <TimePicker 
         value={data?.time}
         onChange={(val) => setField('time', val)}
         title={'Время'}

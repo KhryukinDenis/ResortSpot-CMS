@@ -7,6 +7,10 @@ import { Room } from "../../../model/room";
 import { Rooms } from "../../../mock/mock";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
+import { TextInput } from "../../../components/ui/text-input";
+import { NumberInput } from "../../../components/ui/number-input";
+import { Textarea } from "../../../components/ui/textarea";
+import { Checkbox } from "../../../components/ui/checkbox";
 
 export const RoomDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -27,7 +31,34 @@ export const RoomDetailPage: FC = observer(() => {
   
   return (
     <div className={s.wrapper}>
-      RoomDetailPage
+      <TextInput
+        value={data?.name}
+        onChange={(val) => setField('name', val)}
+        title={'Название'}
+      />
+      <NumberInput 
+        value={data?.area}
+        onChange={(val) => setField('area', val)}
+        title={'Площадь'}
+      />
+      <NumberInput 
+        value={data?.count_people}
+        onChange={(val) => setField('count_people', val)}
+        title={'Количество человек'}
+      />
+      {data && (
+        <Checkbox
+          value={data?.isBooked}
+          onChange={(val) => setField('isBooked', val)}
+          title={'Данный номер сейчас недоступен'}
+        />
+      )}
+      <Textarea 
+        value={data?.description}
+        onChange={(val) => setField('description', val)}
+        title={'Краткое описание (для карточки в списке)'}
+        maxCount={550}
+      />
     </div>
   );
 });

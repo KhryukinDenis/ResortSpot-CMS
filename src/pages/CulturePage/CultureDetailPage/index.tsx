@@ -35,7 +35,6 @@ export const CultureDetailPage: FC = observer(() => {
         onChange={(val) => setField('name', val)}
         title={'Название'}
       />
-      {/* TODO: Подумать над типом данных и компонентом */}
       <TextInput 
         value={data?.address}
         onChange={(val) => setField('address', val)}

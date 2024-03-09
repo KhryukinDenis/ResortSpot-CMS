@@ -1,6 +1,6 @@
 import { FC } from "react";
 import s from './style.module.scss';
-import { Img } from "../ui/abstract/image/img";
+import { Img } from "../ui/image/img";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../stores";

@@ -4,7 +4,7 @@ import { FC, useRef, useState } from "react";
 import s from "./style.module.scss";
 import { Toolbar } from "../toolbar";
 import { convertFromHTML, convertToHTML } from 'draft-convert';
-import { Img } from "../abstract/image/img";
+import { Img } from "../image/img";
 import download from "../../../assets/images/icons/download.svg";
 
 interface IProps {
@@ -112,10 +112,10 @@ export const TextEditor: FC<IProps> = observer((props) => {
         <div className={s.editor_container}>
           <Editor
             ref={editor}
-            placeholder={'Нажмите кнопку "Загрузить" в правом верхнем углу чтобы отобразить в редакторе имеющийся текст. Если текст не задан - задайте его.'}
+            placeholder={'Нажмите кнопку "Загрузить" в левом верхнем углу, чтобы отобразить в редакторе имеющийся текст. Если текст не задан - задайте его.'}
             handleKeyCommand={handleKeyCommand}
             editorState={editorState}
-            blockStyleFn={myBlockStyleFn}
+            blockStyleFn={myBlockStyleFn}  
             onChange={(editorState) => {
               setEditorState(editorState);
               const contentState = editorState.getCurrentContent();

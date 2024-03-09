@@ -1,0 +1,51 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+
+  .title {
+    font-size: 11px;
+    margin: 0 0 2px 2px;
+    color: black;
+    position: relative;
+  }
+  
+  .timepicker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .select {
+      height: 40px;
+      width: 60px;
+      padding: 2px 5px;
+      border: 1px solid #E8E9EC;
+      border-radius: 5px;
+      font-size: 16px;
+  
+      &:focus-visible {
+        outline: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      .option {
+        border: 1px solid #E8E9EC;
+        border-radius: 5px;
+        background-color: white;
+      }
+    }
+
+    .text {
+      font-size: 16px;
+      margin: 0px 5px;
+    }
+  }
+}
+
+select:focus > option:checked { 
+  background: #E98A50 !important;
+  color: white
+}
