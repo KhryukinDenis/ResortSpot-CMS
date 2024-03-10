@@ -3,7 +3,7 @@ export class Entertainment {
   name: string;
   description: string;
   description_min: string;
-  time: string; // TODO: поменять на нужный тип если понадобиться
+  time: string;
   count_people: number;
   price: number;
 

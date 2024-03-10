@@ -8,7 +8,7 @@ export class CategoryStore {
   categoryAgent = agent.CategoryAgent;
 
   @observable selectedCategory: Category | null = null;
-  @observable categories: Category[] =[];
+  @observable categories: Category[] = [];
   @observable category: Category | null = null;
 
   @action
