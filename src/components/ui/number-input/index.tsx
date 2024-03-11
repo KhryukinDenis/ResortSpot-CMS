@@ -6,6 +6,7 @@ interface IProps {
   value: number | undefined;
   title?: string;
   onChange?: (val: string) => void;
+  disabled?: boolean;
 }
 
 export const NumberInput: FC<IProps> = observer((props) => {
@@ -18,6 +19,7 @@ export const NumberInput: FC<IProps> = observer((props) => {
           value={props.value}
           onChange={(e) => props.onChange?.(e.target.value)}
           placeholder={props.title}
+          disabled={props.disabled}
         />
       </div>
     </div>

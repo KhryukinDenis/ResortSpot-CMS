@@ -20,6 +20,7 @@ export const Sidebar: FC = observer(() => {
     if (selectedCity) { 
       cityStore.setSelectedCity(selectedCity);
       categoryStore.setSelectedCategory(null);
+      navigate(selectedCity.name);
     }
   }; 
 

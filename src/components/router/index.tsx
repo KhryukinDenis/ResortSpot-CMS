@@ -16,6 +16,7 @@ import { MainPage } from "../../pages/MainPage";
 import { NotFoundPage } from "../../pages/NotFoundPage";
 import { RoomDetailPage } from "../../pages/RoomPage/RoomDetailPage";
 import { RestDetailPage } from "../../pages/RestPage/RestDetailPage";
+import { CityDetailPage } from "../../pages/CityPage/CityDetailPage";
 
 export const Router: FC = observer(() => {
   useDidMountEffect(() => {
@@ -29,6 +30,11 @@ export const Router: FC = observer(() => {
 
         {Cities.map((city) =>
           <>
+            <Route 
+              key={`${city.name}`}
+              path={`${city.name}`}
+              element={<CityDetailPage city={city.name}/>}
+            />
             <Route
               key={`${city.name}/hotel`}
               path={`/${city.name}/hotel`}
