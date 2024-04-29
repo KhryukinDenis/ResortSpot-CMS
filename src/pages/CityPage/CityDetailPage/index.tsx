@@ -10,6 +10,7 @@ import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
 import { TextEditor } from "../../../components/ui/editor";
 import { NumberInput } from "../../../components/ui/number-input";
+import { PhotoGallery } from "../../../components/ui/photo-gallery";
 
 interface IProps {
   city?: string;
@@ -65,6 +66,10 @@ export const CityDetailPage: FC<IProps> = observer((props) => {
         value={data?.name}
         title={'Название на английском языке'}
         disabled
+      />
+      <PhotoGallery 
+        images={data?.images}
+        onChange={(val) => setField('images', val)}
       />
       <TextEditor 
         value={data?.description}

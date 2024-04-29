@@ -12,6 +12,7 @@ import { NumberInput } from "../../../components/ui/number-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { Checkbox } from "../../../components/ui/checkbox";
 import { Button } from "../../../components/ui/button";
+import { PhotoGallery } from "../../../components/ui/photo-gallery";
 
 export const RoomDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -80,6 +81,10 @@ export const RoomDetailPage: FC = observer(() => {
           title={'Данный номер сейчас недоступен'}
         />
       )}
+      <PhotoGallery 
+        images={data?.images}
+        onChange={(val) => setField('images', val)}
+      />
       <Textarea 
         value={data?.description}
         onChange={(val) => setField('description', val)}

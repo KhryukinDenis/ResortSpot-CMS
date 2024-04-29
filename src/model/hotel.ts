@@ -9,6 +9,7 @@ export class Hotel {
   distanse_sea: number;
   price: number;
   description: string;
+  images: string[];
   rooms: Room[];
   rests: Rest[];
 
@@ -20,6 +21,7 @@ export class Hotel {
     this.distanse_sea = source.distanse_sea;
     this.price = source.price;
     this.description = source.description;
+    this.images = source.images;
     this.rooms = source.rooms;
     this.rests = source.rests;
   }
@@ -33,6 +35,7 @@ export class Hotel {
       distance_sea: model?.distanse_sea,
       price: model?.price,
       description: model?.description,
+      images: model?.images,
       rooms: model?.rooms,
       rests: model?.rests,
     }

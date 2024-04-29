@@ -1,7 +1,7 @@
 import { CSSProperties, FC } from "react";
 
 interface IProps {
-  src?: string;
+  src: string;
   alt?: string;
   style?: CSSProperties;
   className?: string;
@@ -11,15 +11,13 @@ interface IProps {
 
 export const Img: FC<IProps> = (props) => {
   return (
-    <>
-      <img 
-        src={props.src}
-        alt={props.alt || "Изображение"}
-        style={props.style}
-        className={props.className}
-        onClick={props.onClick}
-        onLoad={props.onLoad}
-      />
-    </>
+    <img
+      src={props.src}
+      alt={props.alt || "Изображение"}
+      style={props.style}
+      className={props.className}
+      onClick={props.onClick}
+      onLoad={props.onLoad}
+    />
   );
 };

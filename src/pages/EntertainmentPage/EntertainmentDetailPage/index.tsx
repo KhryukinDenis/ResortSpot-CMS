@@ -13,6 +13,7 @@ import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
 import { TimePicker } from "../../../components/ui/time-picker";
 import { Button } from "../../../components/ui/button";
+import { PhotoGallery } from "../../../components/ui/photo-gallery";
 
 export const EntertainmentDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -84,6 +85,10 @@ export const EntertainmentDetailPage: FC = observer(() => {
         onChange={(val) => setField('description_min', val)}
         title={'Краткое описание (для карточки в списке)'}
         maxCount={550}
+      />
+      <PhotoGallery 
+        images={data?.images}
+        onChange={(val) => setField('images', val)}
       />
       <TextEditor 
         value={data?.description}

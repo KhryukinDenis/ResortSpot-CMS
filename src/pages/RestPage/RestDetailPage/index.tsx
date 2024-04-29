@@ -11,6 +11,7 @@ import { TextInput } from "../../../components/ui/text-input";
 import { TextEditor } from "../../../components/ui/editor";
 import { Checkbox } from "../../../components/ui/checkbox";
 import { Button } from "../../../components/ui/button";
+import { PhotoGallery } from "../../../components/ui/photo-gallery";
 
 export const RestDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -66,6 +67,10 @@ export const RestDetailPage: FC = observer(() => {
         value={data ? data.isClosed : false}
         onChange={(val) => setField('isClosed', val)}
         title={'Данный отдых сейчас недоступен'}
+      />
+      <PhotoGallery 
+        images={data?.images}
+        onChange={(val) => setField('images', val)}
       />
       <TextEditor 
         value={data?.description}

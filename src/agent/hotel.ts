@@ -12,7 +12,7 @@ export const HotelAgent = {
   },
   getOneHotel: async (id: number): Promise<AxiosResponse<Hotel>> => {
     try {
-      const response = await axios.get(``);
+      const response = await axios.get(`/api/hotels/${id}`);
       return response;
     } catch (error: any) {
       throw error;
@@ -28,7 +28,7 @@ export const HotelAgent = {
   },
   deleteHotel: async (id: number): Promise<AxiosResponse<void>> => {
     try {
-      const response = await axios.delete(``);
+      const response = await axios.delete(`/api/hotels/${id}`);
       return response;
     } catch (error: any) {
       throw error;

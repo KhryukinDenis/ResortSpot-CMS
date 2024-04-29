@@ -14,6 +14,7 @@ import { Textarea } from "../../../components/ui/textarea";
 import { Table } from "../../../components/ui/table/table";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/ui/button";
+import { PhotoGallery } from "../../../components/ui/photo-gallery";
 
 export const HotelDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -151,6 +152,10 @@ export const HotelDetailPage: FC = observer(() => {
         onChange={(val) => setField('description', val)}
         title={'Краткое описание (для карточки в списке)'}
         maxCount={550}
+      />
+      <PhotoGallery 
+        images={data?.images}
+        onChange={(val) => setField('images', val)}
       />
       <Table 
         data={data?.rooms ? data?.rooms : []}

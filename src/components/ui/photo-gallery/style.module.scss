@@ -1,0 +1,123 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    font-size: 11px;
+    margin: 0 0 2px 2px;
+    color: black;
+    position: relative;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    .fullScreenImage {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .addBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #E8E9EC;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      border: 2px solid #E8E9EC;
+    }
+  }
+
+  .addBtnDisabled {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #E8E9EC;
+    border-radius: 5px;
+    opacity: 0.5;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  
+    .images {
+      position: relative;
+      opacity: 1;
+  
+      &:hover {
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.6);
+          z-index: 1;
+        }
+      }
+  
+      .action {
+        display: flex;
+        gap: 3px;
+        position: absolute;
+        z-index: 9;
+        right: 3px;
+        top: 3px;
+  
+        .actionImg {
+          width: 15px;
+          height: 15px;
+  
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+  
+      .image {
+        border-radius: 5px;
+        width: 100px;
+        height: 100px;
+        position: relative;
+      }
+    }
+  }
+}

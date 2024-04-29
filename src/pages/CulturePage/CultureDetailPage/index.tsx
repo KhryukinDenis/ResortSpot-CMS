@@ -11,6 +11,7 @@ import { TextInput } from "../../../components/ui/text-input";
 import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
 import { Button } from "../../../components/ui/button";
+import { PhotoGallery } from "../../../components/ui/photo-gallery";
 
 export const CultureDetailPage: FC = observer(() => {
   const { id } = useIdParams();
@@ -72,6 +73,10 @@ export const CultureDetailPage: FC = observer(() => {
         onChange={(val) => setField('description_min', val)}
         title={'Краткое описание (для карточки в списке)'}
         maxCount={550}
+      />
+      <PhotoGallery 
+        images={data?.images}
+        onChange={(val) => setField('images', val)}
       />
       <TextEditor 
         value={data?.description}

@@ -4,6 +4,7 @@ export class Room {
   area: number;
   count_people: number;
   description: string;
+  images: string[];
   isBooked: boolean;
   
   constructor(source: any) {
@@ -12,6 +13,7 @@ export class Room {
     this.area = source.area;
     this.count_people = source.count_people;
     this.description = source.description;
+    this.images = source.images;
     this.isBooked = source.isBooked;
   }
 
@@ -22,6 +24,7 @@ export class Room {
       area: model?.area,
       count_people: model?.count_people,
       description: model?.description,
+      images: model?.images,
       isBooked: model?.isBooked,
     }
   }
