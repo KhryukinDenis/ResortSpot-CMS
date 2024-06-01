@@ -13,6 +13,7 @@ import { Categories, Cities } from "../../mock/mock";
 export const Sidebar: FC = observer(() => {
   const cityStore = useStore("cityStore");
   const categoryStore = useStore("categoryStore");
+  const authStore = useStore("authStore");
   const navigate = useNavigate();
 
   const onSelect = (cityName: string) => {
@@ -37,6 +38,13 @@ export const Sidebar: FC = observer(() => {
     categoryStore.setSelectedCategory(null);
   };
 
+  const unlogin = () => {
+    authStore.unlogin();
+    authStore.reset('', '');
+    authStore.setWarning('');
+    navigate('/auth');
+  };
+
   return (
     <div className={s.sidebar}>
       <div className={s.user}>
@@ -44,7 +52,7 @@ export const Sidebar: FC = observer(() => {
           <div className={s.avatar}>A</div>
           <div>Admin</div>
         </div>
-        <Img src={exit}/>
+        <Img src={exit} onClick={unlogin} className={s.exit}/>
       </div>
 
       <div className={s.panel} onClick={panelClick}>

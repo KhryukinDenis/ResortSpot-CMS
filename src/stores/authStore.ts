@@ -46,4 +46,10 @@ export class AuthStore {
     this.login = login;
     this.password = password;
   };
+
+  @action 
+  unlogin = () => {
+    localStorage.removeItem("login");
+    localStorage.removeItem("password");
+  };
 }
