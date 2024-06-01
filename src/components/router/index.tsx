@@ -17,6 +17,7 @@ import { NotFoundPage } from "../../pages/NotFoundPage";
 import { RoomDetailPage } from "../../pages/RoomPage/RoomDetailPage";
 import { RestDetailPage } from "../../pages/RestPage/RestDetailPage";
 import { CityDetailPage } from "../../pages/CityPage/CityDetailPage";
+import { AuthPage } from "../../pages/AuthPage";
 
 export const Router: FC = observer(() => {
   useDidMountEffect(() => {
@@ -27,6 +28,7 @@ export const Router: FC = observer(() => {
     <div className={s.layout}>
       <Routes>
         <Route path={'/'} element={<MainPage />} />
+        <Route path={'/auth'} element={<AuthPage />} />
 
         {Cities.map((city) =>
           <>

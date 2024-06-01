@@ -8,6 +8,7 @@ import { EntertainmentStore } from "./entertainmentStore";
 import { HotelStore } from "./hotelStore";
 import { RoomStore } from "./roomStore";
 import { RestStore } from "./restStore";
+import { AuthStore } from "./authStore";
 
 export const stores = Object.freeze({
   appStore: new AppStore(),
@@ -19,6 +20,7 @@ export const stores = Object.freeze({
   entertainmentStore: new EntertainmentStore(),
   roomStore: new RoomStore(),
   restStore: new RestStore(),
+  authStore: new AuthStore(),
 });
 
 export const storesContext = React.createContext(stores);
