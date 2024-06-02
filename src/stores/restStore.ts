@@ -12,24 +12,24 @@ export class RestStore {
   @observable canEdit: boolean = false;
 
   @action
-  fetchAll = () => {
+  fetchAll = async (hotel_id: number) => {
     this.rest = null;
-    this.restAgent.getAllRests()
+    await this.restAgent.getAllRests(hotel_id)
       .then((response) => (this.rests = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  fetchById = (id: number) => {
+  fetchById = async (id: number, hotel_id: number) => {
     this.rest = null;
-    this.restAgent.getOneRest(id)
+    await this.restAgent.getOneRest(id, hotel_id)
       .then((response) => (this.rest = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  update = (rest: Rest): Promise<boolean> => {
-    return this.restAgent.updateRest(rest)
+  update = (rest: Rest, hotel_id: number): Promise<boolean> => {
+    return this.restAgent.updateRest(rest, hotel_id)
       .then(() => {
         console.log('Объект отдыха обновлен');
         return true;
@@ -41,8 +41,8 @@ export class RestStore {
   };
 
   @action
-  delete = (id: number): Promise<boolean> => {
-    return this.restAgent.deleteRest(id)
+  delete = (id: number, hotel_id: number): Promise<boolean> => {
+    return this.restAgent.deleteRest(id, hotel_id)
       .then(() => {
         console.log('Объект отдыха удален');
         return true;

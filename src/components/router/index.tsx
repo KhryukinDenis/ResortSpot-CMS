@@ -2,7 +2,6 @@ import { FC } from "react";
 import s from "./style.module.scss";
 import { Route, Routes } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { Cities } from "../../mock/mock";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 import { HotelPage } from "../../pages/HotelPage";
 import { NaturePage } from "../../pages/NaturePage";
@@ -18,10 +17,13 @@ import { RoomDetailPage } from "../../pages/RoomPage/RoomDetailPage";
 import { RestDetailPage } from "../../pages/RestPage/RestDetailPage";
 import { CityDetailPage } from "../../pages/CityPage/CityDetailPage";
 import { AuthPage } from "../../pages/AuthPage";
+import { useStore } from "../../stores";
 
 export const Router: FC = observer(() => {
+  const cityStore = useStore('cityStore');
+
   useDidMountEffect(() => {
-    // TODO: Запрос за массивом городов
+    cityStore.fetchAll();
   });
 
   return (
@@ -30,12 +32,12 @@ export const Router: FC = observer(() => {
         <Route path={'/'} element={<MainPage />} />
         <Route path={'/auth'} element={<AuthPage />} />
 
-        {Cities.map((city) =>
+        {cityStore.cities.map((city) =>
           <>
             <Route 
               key={`${city.name}`}
               path={`${city.name}`}
-              element={<CityDetailPage city={city.name}/>}
+              element={<CityDetailPage city={city} />}
             />
             <Route
               key={`${city.name}/hotel`}

@@ -6,7 +6,6 @@ import plus from "../../../assets/images/icons/plus.svg";
 import del from "../../../assets/images/icons/close_krest.svg";
 import eye from "../../../assets/images/icons/eye.svg";
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect";
-import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 
 interface IProps {
   images?: string[];
@@ -18,10 +17,9 @@ export const PhotoGallery: FC<IProps> = observer((props) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [visibleActions, setVisibleActions] = useState(new Array(data.length).fill(false));
 
-  useDidMountEffect(() => {
-    if (!props.images) return;
-    setData(props.images);
-  });
+  useDidUpdateEffect(() => {
+    setData(props.images!);
+  }, [props.images]);
   
   const addImg = () => {
     if (data.length >= 8) return;
@@ -75,7 +73,7 @@ export const PhotoGallery: FC<IProps> = observer((props) => {
         </div>
         <div className={s.list}>
           {data?.map((image, idx) => (
-            <div 
+              <div 
               key={idx}
               className={s.images}
               onMouseEnter={() => {
@@ -97,7 +95,7 @@ export const PhotoGallery: FC<IProps> = observer((props) => {
               )}
               <Img key={idx} src={image} className={s.image}/>
             </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

@@ -1,16 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { FC, useState } from "react";
-import s from "./style.module.scss";
 import { Table } from "../../components/ui/table/table";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../stores";
 import { Culture } from "../../model/culture";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
-import { Cultures } from "../../mock/mock";
 
-interface IProps { }
-
-export const CulturePage: FC<IProps> = observer((props) => {
+export const CulturePage: FC = observer(() => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
   const cultureStore = useStore("cultureStore");
@@ -27,17 +23,20 @@ export const CulturePage: FC<IProps> = observer((props) => {
   };
 
   const handleDelete = (id: number) => {
-    cultureStore.delete(id);
+    if (cityStore.selectedCity) {
+      cultureStore.delete(id, cityStore.selectedCity?.id);
+    }
   };
 
   const handleAdd = () => {
     navigate(`/${cityStore.selectedCity?.name}/culture/create`);
   };
 
-  useDidMountEffect(() => {
-    // cultureStore.fetchAll();
-    // setData(cultureStore.cultures);
-    setData(Cultures);
+  useDidMountEffect(async () => {
+    if (cityStore.selectedCity) {
+      await cultureStore.fetchAll(cityStore.selectedCity?.id);
+      setData(cultureStore.cultures);
+    }
   });
   
   return (

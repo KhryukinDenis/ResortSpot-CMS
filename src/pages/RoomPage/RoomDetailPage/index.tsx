@@ -4,7 +4,6 @@ import s from "./style.module.scss";
 import { useIdParams } from "../../../hooks/useIdParams";
 import { useStore } from "../../../stores";
 import { Room } from "../../../model/room";
-import { Rooms } from "../../../mock/mock";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
@@ -18,30 +17,25 @@ export const RoomDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const roomStore = useStore("roomStore");
+  const hotelStore = useStore("hotelStore");
   const [data, setData] = useState<Room | null>(null);
 
-  const arr = Rooms;
-
-  useDidMountEffect(() => {
+  useDidMountEffect(async () => {
     if (isEdit) {
-      // roomStore.fetchById(id);
-      // setData(roomStore.room);
-      setData(arr[0]);
+      if (hotelStore.hotel) {
+        await roomStore.fetchById(id, hotelStore.hotel.id);
+        setData(roomStore.room);
+      }
     } else {
-      // restStore.createNew();
-      setData(new Room({}));
+      roomStore.createNew();
+      setData(roomStore.room);
     }
   });
 
   const updateRoom = () => {
-    if (data) {
-      if (isEdit) {
-        roomStore.update(data);
-        roomStore.setCanEdit(false);
-      } else {
-        // Пушим data в массив 
-        roomStore.setCanEdit(false);
-      }
+    if (data && hotelStore.hotel) {
+      roomStore.update(data, hotelStore.hotel.id);
+      roomStore.setCanEdit(false);
     }
   };
 

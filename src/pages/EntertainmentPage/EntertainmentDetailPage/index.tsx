@@ -3,7 +3,6 @@ import { FC, useState } from "react";
 import s from "./style.module.scss";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { Entertainment } from "../../../model/entertainment";
-import { Entertainments } from "../../../mock/mock";
 import { useStore } from "../../../stores";
 import { useIdParams } from "../../../hooks/useIdParams";
 import { TextInput } from "../../../components/ui/text-input";
@@ -14,35 +13,35 @@ import { TextEditor } from "../../../components/ui/editor";
 import { TimePicker } from "../../../components/ui/time-picker";
 import { Button } from "../../../components/ui/button";
 import { PhotoGallery } from "../../../components/ui/photo-gallery";
+import { useNavigate } from "react-router-dom";
 
 export const EntertainmentDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const entertainmentStore = useStore("entertainmentStore");
+  const cityStore = useStore("cityStore");
   const [data, setData] = useState<Entertainment | null>(null);
+  const navigate = useNavigate();
 
-  const arr = Entertainments;
-
-  useDidMountEffect(() => {
+  useDidMountEffect(async () => {
     if (isEdit) {
-      // entertainmentStore.fetchById(id);
-      // setData(entertainmentStore.entertainment);
-      setData(arr[0]);
+      if (cityStore.selectedCity) {
+        await entertainmentStore.fetchById(id, cityStore.selectedCity.id);
+        setData(entertainmentStore.entertainment);
+      }
     } else {
-      // natureStore.createNew();
-      setData(new Entertainment({}));
+      entertainmentStore.createNew();
+      setData(entertainmentStore.entertainment);
     }
   });
 
   const updateEntertainment = () => {
-    if (data) {
-      if (isEdit) {
-        entertainmentStore.update(data);
-        entertainmentStore.setCanEdit(false);
-      } else {
-        // Пушим data в массив 
-        entertainmentStore.setCanEdit(false);
-      }
+    if (data && cityStore.selectedCity) {
+      entertainmentStore.update(data, cityStore.selectedCity.id);
+      entertainmentStore.setCanEdit(false);
+      setTimeout(() => {
+        navigate(`/${cityStore.selectedCity?.name}/entertainment`);
+      }, 500);
     }
   };
 

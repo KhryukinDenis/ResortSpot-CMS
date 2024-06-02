@@ -1,16 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { FC, useState } from "react";
-import s from "./style.module.scss";
 import { Table } from "../../components/ui/table/table";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../stores";
 import { Hotel } from "../../model/hotel";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
-import { Hotels } from "../../mock/mock";
 
-interface IProps { }
-
-export const HotelPage: FC<IProps> = observer((props) => {
+export const HotelPage: FC = observer(() => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
   const hotelStore = useStore("hotelStore");
@@ -28,17 +24,20 @@ export const HotelPage: FC<IProps> = observer((props) => {
   };
 
   const handleDelete = (id: number) => {
-    hotelStore.delete(id);
+    if (cityStore.selectedCity) {
+      hotelStore.delete(id, cityStore.selectedCity?.id);
+    }
   };
 
   const handleAdd = () => {
     navigate(`/${cityStore.selectedCity?.name}/hotel/create`);
   };
 
-  useDidMountEffect(() => {
-    // hotelStore.fetchAll();
-    // setData(hotelStore.hotels);
-    setData(Hotels);
+  useDidMountEffect(async () => {
+    if (cityStore.selectedCity) {
+      await hotelStore.fetchAll(cityStore.selectedCity?.id);
+      setData(hotelStore.hotels);
+    }
   });
 
   return (

@@ -12,24 +12,24 @@ export class CultureStore {
   @observable canEdit: boolean = false;
 
   @action
-  fetchAll = () => {
+  fetchAll = async (city_id: number) => {
     this.culture = null;
-    this.cultureAgent.getAllCultures()
+    await this.cultureAgent.getAllCultures(city_id)
       .then((response) => (this.cultures = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  fetchById = (id: number) => {
+  fetchById = async (id: number, city_id: number) => {
     this.culture = null;
-    this.cultureAgent.getOneCulture(id)
+    await this.cultureAgent.getOneCulture(id, city_id)
       .then((response) => (this.culture = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  update = (culture: Culture): Promise<boolean> => {
-    return this.cultureAgent.updateCulture(culture)
+  update = (culture: Culture, city_id: number): Promise<boolean> => {
+    return this.cultureAgent.updateCulture(culture, city_id)
       .then(() => {
         console.log('Объект культуры обновлен');
         return true;
@@ -41,8 +41,8 @@ export class CultureStore {
   };
 
   @action
-  delete = (id: number): Promise<boolean> => {
-    return this.cultureAgent.deleteCulture(id)
+  delete = (id: number, city_id: number): Promise<boolean> => {
+    return this.cultureAgent.deleteCulture(id, city_id)
       .then(() => {
         console.log('Объект культуры удален');
         return true;

@@ -4,7 +4,6 @@ import s from "./style.module.scss";
 import { useIdParams } from "../../../hooks/useIdParams";
 import { useStore } from "../../../stores";
 import { Culture } from "../../../model/culture";
-import { Cultures } from "../../../mock/mock";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
@@ -12,35 +11,35 @@ import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
 import { Button } from "../../../components/ui/button";
 import { PhotoGallery } from "../../../components/ui/photo-gallery";
+import { useNavigate } from "react-router-dom";
 
 export const CultureDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const cultureStore = useStore("cultureStore");
+  const cityStore = useStore("cityStore");
   const [data, setData] = useState<Culture | null>(null);
+  const navigate = useNavigate();
 
-  const arr = Cultures;
-
-  useDidMountEffect(() => {
+  useDidMountEffect(async () => {
     if (isEdit) {
-      // cultureStore.fetchById(id);
-      // setData(cultureStore.culture);
-      setData(arr[0]);
+      if (cityStore.selectedCity) {
+        await cultureStore.fetchById(id, cityStore.selectedCity?.id);
+        setData(cultureStore.culture);
+      }
     } else {
-      // cultureStore.createNew();
-      setData(new Culture({}));
+      cultureStore.createNew();
+      setData(cultureStore.culture);
     }
   });
 
   const updateCulture = () => {
-    if (data) {
-      if (isEdit) {
-        cultureStore.update(data);
-        cultureStore.setCanEdit(false);
-      } else {
-        // Пушим data в массив 
-        cultureStore.setCanEdit(false);
-      }
+    if (data && cityStore.selectedCity) {
+      cultureStore.update(data, cityStore.selectedCity?.id);
+      cultureStore.setCanEdit(false);
+      setTimeout(() => {
+        navigate(`/${cityStore.selectedCity?.name}/culture`);
+      }, 500);
     }
   };
 

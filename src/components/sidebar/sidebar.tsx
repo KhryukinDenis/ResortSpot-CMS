@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores";
 import { Category } from "../../model/category";
-import { Categories, Cities } from "../../mock/mock";
+import { Categories } from "../../mock/mock";
 
 export const Sidebar: FC = observer(() => {
   const cityStore = useStore("cityStore");
@@ -17,7 +17,7 @@ export const Sidebar: FC = observer(() => {
   const navigate = useNavigate();
 
   const onSelect = (cityName: string) => {
-    const selectedCity = Cities.find(city => city.name_rus === cityName);
+    const selectedCity = cityStore.cities.find(city => city.name_rus === cityName);
     if (selectedCity) { 
       cityStore.setSelectedCity(selectedCity);
       categoryStore.setSelectedCategory(null);
@@ -61,7 +61,7 @@ export const Sidebar: FC = observer(() => {
       </div>
 
       <Select 
-        options={Cities.map(city => city.name_rus)}
+        options={cityStore.cities.map(city => city.name_rus)}
         option={cityStore.selectedCity ? cityStore.selectedCity?.name_rus : null}
         placeholder={'Выберите город'}
         style={{ marginBottom: '20px' }}

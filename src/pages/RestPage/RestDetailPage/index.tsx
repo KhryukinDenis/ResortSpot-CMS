@@ -6,7 +6,6 @@ import { useStore } from "../../../stores";
 import { Rest } from "../../../model/rest";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
-import { Rests } from "../../../mock/mock";
 import { TextInput } from "../../../components/ui/text-input";
 import { TextEditor } from "../../../components/ui/editor";
 import { Checkbox } from "../../../components/ui/checkbox";
@@ -17,30 +16,25 @@ export const RestDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const restStore = useStore("restStore");
+  const hotelStore = useStore("hotelStore");
   const [data, setData] = useState<Rest | null>(null);
 
-  const arr = Rests;
-
-  useDidMountEffect(() => {
+  useDidMountEffect(async () => {
     if (isEdit) {
-      // restStore.fetchById(id);
-      // setData(restStore.rest);
-      setData(arr[0]);
+      if (hotelStore.hotel) {
+        await restStore.fetchById(id, hotelStore.hotel.id);
+        setData(restStore.rest);
+      }
     } else {
-      // restStore.createNew();
-      setData(new Rest({}));
+      restStore.createNew();
+      setData(restStore.rest);
     }
   });
 
   const updateRest = () => {
-    if (data) {
-      if (isEdit) {
-        restStore.update(data);
-        restStore.setCanEdit(false);
-      } else {
-        // Пушим data в массив 
-        restStore.setCanEdit(false);
-      }
+    if (data && hotelStore.hotel) {
+      restStore.update(data, hotelStore.hotel.id);
+      restStore.setCanEdit(false);
     }
   };
 

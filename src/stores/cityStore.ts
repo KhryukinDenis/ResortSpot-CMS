@@ -26,9 +26,9 @@ export class CityStore {
   };
 
   @action
-  fetchOne = (city: string) => {
+  fetchOne = async (id: number) => {
     this.city = null;
-    this.cityAgent.getOneCity(city)
+    await this.cityAgent.getOneCity(id)
       .then((response) => (this.city = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };

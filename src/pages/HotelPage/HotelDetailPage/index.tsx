@@ -4,7 +4,6 @@ import s from "./style.module.scss";
 import { useIdParams } from "../../../hooks/useIdParams";
 import { useStore } from "../../../stores";
 import { Hotel } from "../../../model/hotel";
-import { Hotels } from "../../../mock/mock";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
@@ -26,30 +25,27 @@ export const HotelDetailPage: FC = observer(() => {
   const [data, setData] = useState<Hotel | null>(null);
   const navigate = useNavigate();
 
-  const arr = Hotels;
-
   const Stars: number[] = [1, 2, 3, 4, 5];
 
-  useDidMountEffect(() => {
+  useDidMountEffect(async () => {
     if (isEdit) {
-      // hotelStore.fetchById(id);
-      // setData(hotelStore.hotel);
-      setData(arr[0]);
+      if (cityStore.selectedCity) {
+        await hotelStore.fetchById(id, cityStore.selectedCity?.id);
+        setData(hotelStore.hotel);
+      }
     } else {
-      // hotelStore.createNew();
-      setData(new Hotel({}));
+      hotelStore.createNew();
+      setData(hotelStore.hotel);
     }
   });
 
   const updateHotel = () => {
-    if (data) {
-      if (isEdit) {
-        hotelStore.update(data);
-        hotelStore.setCanEdit(false);
-      } else {
-        // Пушим data в массив 
-        hotelStore.setCanEdit(false);
-      }
+    if (data && cityStore.selectedCity) {
+      hotelStore.update(data, cityStore.selectedCity?.id);
+      hotelStore.setCanEdit(false);
+      setTimeout(() => {
+        navigate(`/${cityStore.selectedCity?.name}/hotel`);
+      }, 500);
     }
   };
 
@@ -95,11 +91,15 @@ export const HotelDetailPage: FC = observer(() => {
   };
 
   const handleDeleteRoom = (id: number) => {
-    roomStore.delete(id);
+    if (hotelStore.hotel) {
+      roomStore.delete(id, hotelStore.hotel.id);
+    }
   };
 
   const handleDeleteRest = (id: number) => {
-    restStore.delete(id);
+    if (hotelStore.hotel) {
+      restStore.delete(id, hotelStore.hotel.id);
+    }
   };
 
   const handleAddRoom = () => {

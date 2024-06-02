@@ -12,24 +12,24 @@ export class NatureStore {
   @observable canEdit: boolean = false;
 
   @action
-  fetchAll = () => {
+  fetchAll = async (city_id: number) => {
     this.nature = null;
-    this.natureAgent.getAllNatures()
+    await this.natureAgent.getAllNatures(city_id)
       .then((response) => (this.natures = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  fetchById = (id: number) => {
+  fetchById = async (id: number, city_id: number) => {
     this.nature = null;
-    this.natureAgent.getOneNature(id)
+    await this.natureAgent.getOneNature(id, city_id)
       .then((response) => (this.nature = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  update = (nature: Nature): Promise<boolean> => {
-    return this.natureAgent.updateNature(nature)
+  update = (nature: Nature, city_id: number): Promise<boolean> => {
+    return this.natureAgent.updateNature(nature, city_id)
       .then(() => {
         console.log('Объект природы обновлен');
         return true;
@@ -41,8 +41,8 @@ export class NatureStore {
   };
 
   @action
-  delete = (id: number): Promise<boolean> => {
-    return this.natureAgent.deleteNature(id)
+  delete = (id: number, city_id: number): Promise<boolean> => {
+    return this.natureAgent.deleteNature(id, city_id)
       .then(() => {
         console.log('Объект природы удален');
         return true;

@@ -12,24 +12,24 @@ export class EntertainmentStore {
   @observable canEdit: boolean = false;
 
   @action
-  fetchAll = () => {
+  fetchAll = async (city_id: number) => {
     this.entertainment = null;
-    this.entertainmentAgent.getAllEntertainments()
+    await this.entertainmentAgent.getAllEntertainments(city_id)
       .then((response) => (this.entertainments = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  fetchById = (id: number) => {
+  fetchById = async (id: number, city_id: number) => {
     this.entertainment = null;
-    this.entertainmentAgent.getOneEntertainment(id)
+    await this.entertainmentAgent.getOneEntertainment(id, city_id)
       .then((response) => (this.entertainment = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  update = (entertainment: Entertainment): Promise<boolean> => {
-    return this.entertainmentAgent.updateEntertainment(entertainment)
+  update = (entertainment: Entertainment, city_id: number): Promise<boolean> => {
+    return this.entertainmentAgent.updateEntertainment(entertainment, city_id)
       .then(() => {
         console.log('Достопримечательность обновлена');
         return true;
@@ -41,8 +41,8 @@ export class EntertainmentStore {
   };
 
   @action
-  delete = (id: number): Promise<boolean> => {
-    return this.entertainmentAgent.deleteEntertainment(id)
+  delete = (id: number, city_id: number): Promise<boolean> => {
+    return this.entertainmentAgent.deleteEntertainment(id, city_id)
       .then(() => {
         console.log('Достопримечательность удалена');
         return true;

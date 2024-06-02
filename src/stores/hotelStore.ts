@@ -12,24 +12,24 @@ export class HotelStore {
   @observable canEdit: boolean = false;
 
   @action
-  fetchAll = () => {
+  fetchAll = async (city_id: number) => {
     this.hotel = null;
-    this.hotelAgent.getAllHotels()
+    await this.hotelAgent.getAllHotels(city_id)
       .then((response) => (this.hotels = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  fetchById = (id: number) => {
+  fetchById = async (id: number, city_id: number) => {
     this.hotel = null;
-    this.hotelAgent.getOneHotel(id)
+    await this.hotelAgent.getOneHotel(id, city_id)
       .then((response) => (this.hotel = response.data))
       .catch((error) => console.log('Ошибка при запросе', error));
   };
 
   @action
-  update = (hotel: Hotel): Promise<boolean> => {
-    return this.hotelAgent.updateHotel(hotel)
+  update = (hotel: Hotel, city_id: number): Promise<boolean> => {
+    return this.hotelAgent.updateHotel(hotel, city_id)
       .then(() => {
         console.log('Отель обновлен');
         return true;
@@ -41,8 +41,8 @@ export class HotelStore {
   };
 
   @action
-  delete = (id: number): Promise<boolean> => {
-    return this.hotelAgent.deleteHotel(id)
+  delete = (id: number, city_id: number): Promise<boolean> => {
+    return this.hotelAgent.deleteHotel(id, city_id)
       .then(() => {
         console.log('Отель удален');
         return true;

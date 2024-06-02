@@ -1,16 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { FC, useState } from "react";
-import s from "./style.module.scss";
 import { Table } from "../../components/ui/table/table";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../stores";
 import { Entertainment } from "../../model/entertainment";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
-import { Entertainments } from "../../mock/mock";
 
-interface IProps { }
-
-export const EntertainmentPage: FC<IProps> = observer((props) => {
+export const EntertainmentPage: FC = observer(() => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
   const entertainmentStore = useStore("entertainmentStore");
@@ -29,17 +25,20 @@ export const EntertainmentPage: FC<IProps> = observer((props) => {
   };
 
   const handleDelete = (id: number) => {
-    entertainmentStore.delete(id);
+    if (cityStore.selectedCity) {
+      entertainmentStore.delete(id, cityStore.selectedCity.id);
+    }
   };
 
   const handleAdd = () => {
     navigate(`/${cityStore.selectedCity?.name}/entertainment/create`);
   };
 
-  useDidMountEffect(() => {
-    // entertainmentStore.fetchAll();
-    // setData(entertainmentStore.entertainments);
-    setData(Entertainments);
+  useDidMountEffect(async () => {
+    if (cityStore.selectedCity) {
+      await entertainmentStore.fetchAll(cityStore.selectedCity.id);
+      setData(entertainmentStore.entertainments);
+    }
   });
   
   return (

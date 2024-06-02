@@ -1,16 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { FC, useState } from "react";
-import s from "./style.module.scss";
 import { Table } from "../../components/ui/table/table";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../stores";
 import { Nature } from "../../model/nature";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
-import { Natures } from "../../mock/mock";
 
-interface IProps { }
-
-export const NaturePage: FC<IProps> = observer((props) => {
+export const NaturePage: FC = observer(() => {
   const navigate = useNavigate();
   const cityStore = useStore("cityStore");
   const natureStore = useStore("natureStore");
@@ -26,17 +22,20 @@ export const NaturePage: FC<IProps> = observer((props) => {
   };
 
   const handleDelete = (id: number) => {
-    natureStore.delete(id);
+    if (cityStore.selectedCity) {
+      natureStore.delete(id, cityStore.selectedCity?.id);
+    }
   };
 
   const handleAdd = () => {
     navigate(`/${cityStore.selectedCity?.name}/nature/create`);
   };
 
-  useDidMountEffect(() => {
-    // natureStore.fetchAll();
-    // setData(natureStore.natures);
-    setData(Natures);
+  useDidMountEffect(async () => {
+    if (cityStore.selectedCity) {
+      await natureStore.fetchAll(cityStore.selectedCity?.id);
+      setData(natureStore.natures);
+    }
   });
   
   return (

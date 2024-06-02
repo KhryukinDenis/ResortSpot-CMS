@@ -4,15 +4,15 @@ import { City } from "../model/city";
 export const CityAgent = {
   getAllCities: async (): Promise<AxiosResponse<City[]>> => {
     try {
-      const response = await axios.get(``);
+      const response = await axios.get(`/cities`);
       return response;
     } catch (error: any) {
       throw error;
     }
   },
-  getOneCity: async (city: string): Promise<AxiosResponse<City>> => {
+  getOneCity: async (id: number): Promise<AxiosResponse<City>> => {
     try {
-      const response = await axios.get(``);
+      const response = await axios.get(`/cities/${id}`);
       return response;
     } catch (error: any) {
       throw error;
@@ -20,7 +20,7 @@ export const CityAgent = {
   },
   updateCity: async (data: City): Promise<AxiosResponse<City>> => {
     try {
-      const response = await axios.put(``);
+      const response = await axios.post(`/cities`, data);
       return response;
     } catch (error: any) {
       throw error;

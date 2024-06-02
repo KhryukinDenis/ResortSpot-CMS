@@ -4,7 +4,6 @@ import s from "./style.module.scss";
 import { useIdParams } from "../../../hooks/useIdParams";
 import { useStore } from "../../../stores";
 import { Nature } from "../../../model/nature";
-import { Natures } from "../../../mock/mock";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { setDeep } from "../../../utils/setDeep";
 import { TextInput } from "../../../components/ui/text-input";
@@ -12,35 +11,35 @@ import { Textarea } from "../../../components/ui/textarea";
 import { TextEditor } from "../../../components/ui/editor";
 import { Button } from "../../../components/ui/button";
 import { PhotoGallery } from "../../../components/ui/photo-gallery";
+import { useNavigate } from "react-router-dom";
 
 export const NatureDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const natureStore = useStore("natureStore");
+  const cityStore = useStore("cityStore");
   const [data, setData] = useState<Nature | null>(null);
+  const navigate = useNavigate();
 
-  const arr = Natures;
-
-  useDidMountEffect(() => {
+  useDidMountEffect(async () => {
     if (isEdit) {
-      // natureStore.fetchById(id);
-      // setData(natureStore.nature);
-      setData(arr[0]);
+      if (cityStore.selectedCity) {
+        await natureStore.fetchById(id, cityStore.selectedCity.id);
+        setData(natureStore.nature);
+      }
     } else {
-      // natureStore.createNew();
-      setData(new Nature({}));
+      natureStore.createNew();
+      setData(natureStore.nature);
     }
   });
 
   const updateNature = () => {
-    if (data) {
-      if (isEdit) {
-        natureStore.update(data);
-        natureStore.setCanEdit(false);
-      } else {
-        // Пушим data в массив 
-        natureStore.setCanEdit(false);
-      }
+    if (data && cityStore.selectedCity) {
+      natureStore.update(data, cityStore.selectedCity?.id);
+      natureStore.setCanEdit(false);
+      setTimeout(() => {
+        navigate(`/${cityStore.selectedCity?.name}/nature`);
+      }, 500);
     }
   };
 
