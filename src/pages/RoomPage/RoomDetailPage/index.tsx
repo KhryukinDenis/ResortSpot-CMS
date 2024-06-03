@@ -12,13 +12,16 @@ import { Textarea } from "../../../components/ui/textarea";
 import { Checkbox } from "../../../components/ui/checkbox";
 import { Button } from "../../../components/ui/button";
 import { PhotoGallery } from "../../../components/ui/photo-gallery";
+import { useNavigate } from "react-router-dom";
 
 export const RoomDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const roomStore = useStore("roomStore");
   const hotelStore = useStore("hotelStore");
+  const cityStore = useStore("cityStore");
   const [data, setData] = useState<Room | null>(null);
+  const navigate = useNavigate();
 
   useDidMountEffect(async () => {
     if (isEdit) {
@@ -35,7 +38,10 @@ export const RoomDetailPage: FC = observer(() => {
   const updateRoom = () => {
     if (data && hotelStore.hotel) {
       roomStore.update(data, hotelStore.hotel.id);
-      roomStore.setCanEdit(false);
+      setTimeout(() => {
+        if (roomStore.canEdit) return;
+        navigate(`/${cityStore.selectedCity?.name}/hotel/${hotelStore.hotel?.id}`);
+      }, 700);
     }
   };
 

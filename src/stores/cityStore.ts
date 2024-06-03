@@ -17,6 +17,11 @@ export class CityStore {
     this.selectedCity = city;
   };
 
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
+
   @action 
   fetchAll = () => {
     this.city = null;
@@ -37,6 +42,7 @@ export class CityStore {
   update = (city: City): Promise<boolean> => {
     return this.cityAgent.updateCity(city)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Город обновлен');
         return true;
       })
@@ -44,10 +50,5 @@ export class CityStore {
         console.log('Ошибка при обновлении города', error);
         return false;
       });
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

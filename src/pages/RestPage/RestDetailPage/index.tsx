@@ -11,13 +11,16 @@ import { TextEditor } from "../../../components/ui/editor";
 import { Checkbox } from "../../../components/ui/checkbox";
 import { Button } from "../../../components/ui/button";
 import { PhotoGallery } from "../../../components/ui/photo-gallery";
+import { useNavigate } from "react-router-dom";
 
 export const RestDetailPage: FC = observer(() => {
   const { id } = useIdParams();
   const isEdit = !!id;
   const restStore = useStore("restStore");
   const hotelStore = useStore("hotelStore");
+  const cityStore = useStore("cityStore");
   const [data, setData] = useState<Rest | null>(null);
+  const navigate = useNavigate();
 
   useDidMountEffect(async () => {
     if (isEdit) {
@@ -34,7 +37,10 @@ export const RestDetailPage: FC = observer(() => {
   const updateRest = () => {
     if (data && hotelStore.hotel) {
       restStore.update(data, hotelStore.hotel.id);
-      restStore.setCanEdit(false);
+      setTimeout(() => {
+        if (restStore.canEdit) return;
+        navigate(`/${cityStore.selectedCity?.name}/hotel/${hotelStore.hotel?.id}`);
+      }, 700);
     }
   };
 

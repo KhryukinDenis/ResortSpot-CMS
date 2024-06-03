@@ -12,6 +12,11 @@ export class EntertainmentStore {
   @observable canEdit: boolean = false;
 
   @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
+
+  @action
   fetchAll = async (city_id: number) => {
     this.entertainment = null;
     await this.entertainmentAgent.getAllEntertainments(city_id)
@@ -31,6 +36,7 @@ export class EntertainmentStore {
   update = (entertainment: Entertainment, city_id: number): Promise<boolean> => {
     return this.entertainmentAgent.updateEntertainment(entertainment, city_id)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Достопримечательность обновлена');
         return true;
       })
@@ -62,10 +68,5 @@ export class EntertainmentStore {
   createNew = () => {
     this.setCanEdit(false);
     this.setEntertainment(new Entertainment({}));
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

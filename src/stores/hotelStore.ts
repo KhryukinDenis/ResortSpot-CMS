@@ -12,6 +12,11 @@ export class HotelStore {
   @observable canEdit: boolean = false;
 
   @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
+
+  @action
   fetchAll = async (city_id: number) => {
     this.hotel = null;
     await this.hotelAgent.getAllHotels(city_id)
@@ -31,6 +36,7 @@ export class HotelStore {
   update = (hotel: Hotel, city_id: number): Promise<boolean> => {
     return this.hotelAgent.updateHotel(hotel, city_id)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Отель обновлен');
         return true;
       })
@@ -62,10 +68,5 @@ export class HotelStore {
   createNew = () => {
     this.setCanEdit(false);
     this.setHotel(new Hotel({}));
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

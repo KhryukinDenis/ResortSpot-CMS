@@ -26,6 +26,7 @@ export const HotelPage: FC = observer(() => {
   const handleDelete = (id: number) => {
     if (cityStore.selectedCity) {
       hotelStore.delete(id, cityStore.selectedCity?.id);
+      setData((prevData) => prevData.filter(item => item.id !== id));
     }
   };
 

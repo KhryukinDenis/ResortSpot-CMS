@@ -36,10 +36,10 @@ export const NatureDetailPage: FC = observer(() => {
   const updateNature = () => {
     if (data && cityStore.selectedCity) {
       natureStore.update(data, cityStore.selectedCity?.id);
-      natureStore.setCanEdit(false);
       setTimeout(() => {
+        if (natureStore.canEdit) return;
         navigate(`/${cityStore.selectedCity?.name}/nature`);
-      }, 500);
+      }, 700);
     }
   };
 

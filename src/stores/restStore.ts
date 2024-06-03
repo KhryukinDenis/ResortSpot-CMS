@@ -12,6 +12,11 @@ export class RestStore {
   @observable canEdit: boolean = false;
 
   @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
+
+  @action
   fetchAll = async (hotel_id: number) => {
     this.rest = null;
     await this.restAgent.getAllRests(hotel_id)
@@ -31,6 +36,7 @@ export class RestStore {
   update = (rest: Rest, hotel_id: number): Promise<boolean> => {
     return this.restAgent.updateRest(rest, hotel_id)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Объект отдыха обновлен');
         return true;
       })
@@ -62,10 +68,5 @@ export class RestStore {
   createNew = () => {
     this.setCanEdit(false);
     this.setRest(new Rest({}));
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

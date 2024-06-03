@@ -38,10 +38,10 @@ export const EntertainmentDetailPage: FC = observer(() => {
   const updateEntertainment = () => {
     if (data && cityStore.selectedCity) {
       entertainmentStore.update(data, cityStore.selectedCity.id);
-      entertainmentStore.setCanEdit(false);
       setTimeout(() => {
+        if (entertainmentStore.canEdit) return;
         navigate(`/${cityStore.selectedCity?.name}/entertainment`);
-      }, 500);
+      }, 700);
     }
   };
 

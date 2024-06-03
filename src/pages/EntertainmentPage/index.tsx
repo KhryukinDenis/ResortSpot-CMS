@@ -27,6 +27,7 @@ export const EntertainmentPage: FC = observer(() => {
   const handleDelete = (id: number) => {
     if (cityStore.selectedCity) {
       entertainmentStore.delete(id, cityStore.selectedCity.id);
+      setData((prevData) => prevData.filter(item => item.id !== id));
     }
   };
 

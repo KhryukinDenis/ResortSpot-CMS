@@ -9,7 +9,12 @@ export class RoomStore {
 
   @observable rooms: Room[] = [];
   @observable room: Room | null = null;
-  @observable canEdit: boolean = false
+  @observable canEdit: boolean = false;
+
+  @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
 
   @action
   fetchAll = async (hotel_id: number) => {
@@ -31,6 +36,7 @@ export class RoomStore {
   update = (room: Room, hotel_id: number): Promise<boolean> => {
     return this.roomAgent.updateRoom(room, hotel_id)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Номер обновлен');
         return true;
       })
@@ -62,10 +68,5 @@ export class RoomStore {
   createNew = () => {
     this.setCanEdit(false);
     this.setRoom(new Room({}));
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

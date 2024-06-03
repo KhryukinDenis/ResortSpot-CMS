@@ -42,10 +42,10 @@ export const HotelDetailPage: FC = observer(() => {
   const updateHotel = () => {
     if (data && cityStore.selectedCity) {
       hotelStore.update(data, cityStore.selectedCity?.id);
-      hotelStore.setCanEdit(false);
       setTimeout(() => {
+        if (hotelStore.canEdit) return;
         navigate(`/${cityStore.selectedCity?.name}/hotel`);
-      }, 500);
+      }, 700);
     }
   };
 
@@ -93,12 +93,34 @@ export const HotelDetailPage: FC = observer(() => {
   const handleDeleteRoom = (id: number) => {
     if (hotelStore.hotel) {
       roomStore.delete(id, hotelStore.hotel.id);
+  
+      setData((prevData) => {
+        if (!prevData) return null;
+  
+        const updatedRooms = prevData.rooms.filter((item) => item.id !== id);
+        
+        return {
+          ...prevData,
+          rooms: updatedRooms
+        };
+      });
     }
   };
 
   const handleDeleteRest = (id: number) => {
     if (hotelStore.hotel) {
       restStore.delete(id, hotelStore.hotel.id);
+  
+      setData((prevData) => {
+        if (!prevData) return null;
+  
+        const updatedRooms = prevData.rests.filter((item) => item.id !== id);
+        
+        return {
+          ...prevData,
+          rests: updatedRooms
+        };
+      });
     }
   };
 

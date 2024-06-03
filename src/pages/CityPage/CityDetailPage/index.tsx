@@ -20,10 +20,8 @@ export const CityDetailPage: FC<IProps> = observer((props) => {
   const [data, setData] = useState<City | null>(props.city);
   
   const updateCity = () => {
-    if (data) {
-      cityStore.update(data);
-      cityStore.setCanEdit(false);
-    }
+    if (!data) return;
+    cityStore.update(data);
   };
 
   useDidUpdateEffect(async () => {

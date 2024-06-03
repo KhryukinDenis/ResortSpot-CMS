@@ -12,6 +12,11 @@ export class CultureStore {
   @observable canEdit: boolean = false;
 
   @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
+
+  @action
   fetchAll = async (city_id: number) => {
     this.culture = null;
     await this.cultureAgent.getAllCultures(city_id)
@@ -31,6 +36,7 @@ export class CultureStore {
   update = (culture: Culture, city_id: number): Promise<boolean> => {
     return this.cultureAgent.updateCulture(culture, city_id)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Объект культуры обновлен');
         return true;
       })
@@ -62,10 +68,5 @@ export class CultureStore {
   createNew = () => {
     this.setCanEdit(false);
     this.setCulture(new Culture({}));
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

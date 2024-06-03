@@ -12,6 +12,11 @@ export class NatureStore {
   @observable canEdit: boolean = false;
 
   @action
+  setCanEdit = (canEdit: boolean) => {
+    this.canEdit = canEdit ?? !this.canEdit;
+  };
+
+  @action
   fetchAll = async (city_id: number) => {
     this.nature = null;
     await this.natureAgent.getAllNatures(city_id)
@@ -31,6 +36,7 @@ export class NatureStore {
   update = (nature: Nature, city_id: number): Promise<boolean> => {
     return this.natureAgent.updateNature(nature, city_id)
       .then(() => {
+        this.setCanEdit(false);
         console.log('Объект природы обновлен');
         return true;
       })
@@ -62,10 +68,5 @@ export class NatureStore {
   createNew = () => {
     this.setCanEdit(false);
     this.setNature(new Nature({}));
-  };
-
-  @action
-  setCanEdit = (canEdit: boolean) => {
-    this.canEdit = canEdit ?? !this.canEdit;
   };
 }

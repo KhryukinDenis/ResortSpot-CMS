@@ -36,10 +36,10 @@ export const CultureDetailPage: FC = observer(() => {
   const updateCulture = () => {
     if (data && cityStore.selectedCity) {
       cultureStore.update(data, cityStore.selectedCity?.id);
-      cultureStore.setCanEdit(false);
       setTimeout(() => {
+        if (cultureStore.canEdit) return;
         navigate(`/${cityStore.selectedCity?.name}/culture`);
-      }, 500);
+      }, 700);
     }
   };
 
