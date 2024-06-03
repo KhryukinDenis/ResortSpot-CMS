@@ -68,6 +68,11 @@ export const RoomDetailPage: FC = observer(() => {
         onChange={(val) => setField('count_people', val)}
         title={'Количество человек'}
       />
+      <NumberInput
+        value={data?.price}
+        onChange={(val) => setField('price', val)}
+        title={'Цена'}
+      />
       {data && (
         <Checkbox
           value={data?.isBooked}
