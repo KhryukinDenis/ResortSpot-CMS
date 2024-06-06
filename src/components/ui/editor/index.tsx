@@ -33,10 +33,10 @@ export const TextEditor: FC<IProps> = observer((props) => {
           return <p style={{ textAlign: 'right' }}>{block.text}</p>;
         }
         if (block.type === 'header-one') {
-          return <h1 style={{ textAlign: 'center', fontSize: '30px' }}>{block.text}</h1>;
+          return <h1 style={{ textAlign: 'center', fontSize: '30px', margin: '20px 0' }}>{block.text}</h1>;
         }
         if (block.type === 'header-two') {
-          return <h2 style={{ textAlign: 'center', fontSize: '24px' }}>{block.text}</h2>;
+          return <h2 style={{ textAlign: 'center', fontSize: '24px', margin: '20px 0' }}>{block.text}</h2>;
         }
         if (block.type === 'header-three') {
           return <p style={{ fontSize: '20px' }}>{block.text}</p>;
