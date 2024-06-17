@@ -27,7 +27,7 @@ export const TextEditor: FC<IProps> = observer((props) => {
           return <p style={{ textAlign: 'center' }}>{block.text}</p>;
         }
         if (block.type === 'leftAlign') {
-          return <p style={{ textAlign: 'left' }}>{block.text}</p>;
+          return <p style={{ textAlign: 'left', textIndent: '20px' }}>{block.text}</p>;
         }
         if (block.type === 'rightAlign') {
           return <p style={{ textAlign: 'right' }}>{block.text}</p>;
@@ -74,7 +74,7 @@ export const TextEditor: FC<IProps> = observer((props) => {
       case 'blockQuote':
         return s.superFancyBlockquote;
       case 'leftAlign':
-        return s.leftAlign;
+        return `${s.leftAlign} ${s.textIndent}`;
       case 'rightAlign':
         return s.rightAlign;
       case 'centerAlign':

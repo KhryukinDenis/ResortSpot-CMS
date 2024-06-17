@@ -179,30 +179,34 @@ export const HotelDetailPage: FC = observer(() => {
         images={data?.images}
         onChange={(val) => setField('images', val)}
       />
-      <Table 
-        data={data?.rooms ? data?.rooms : []}
-        column={columnsRoom}
-        title={titleTableRoom()}
-        style={{ width: '100%' }}
-        canDelete
-        canAdd
-        canEdit
-        onEdit={(val) => handleEditRoom(val.id)}
-        onDelete={(val) => handleDeleteRoom(val.id)}
-        onAdd={() => handleAddRoom()}
-      />
-      <Table 
-        data={data?.rests ? data?.rests : []}
-        column={columnsRest}
-        title={titleTableRest()}
-        style={{ width: '100%' }}
-        canDelete
-        canAdd
-        canEdit
-        onEdit={(val) => handleEditRest(val.id)}
-        onDelete={(val) => handleDeleteRest(val.id)}
-        onAdd={() => handleAddRest()}
-      />
+      {isEdit && (
+        <>
+          <Table
+            data={data?.rooms ? data?.rooms : []}
+            column={columnsRoom}
+            title={titleTableRoom()}
+            style={{ width: '100%' }}
+            canDelete
+            canAdd
+            canEdit
+            onEdit={(val) => handleEditRoom(val.id)}
+            onDelete={(val) => handleDeleteRoom(val.id)}
+            onAdd={() => handleAddRoom()}
+          />
+          <Table
+            data={data?.rests ? data?.rests : []}
+            column={columnsRest}
+            title={titleTableRest()}
+            style={{ width: '100%' }}
+            canDelete
+            canAdd
+            canEdit
+            onEdit={(val) => handleEditRest(val.id)}
+            onDelete={(val) => handleDeleteRest(val.id)}
+            onAdd={() => handleAddRest()}
+          />
+        </>
+      )}
     </div>
   );
 });
